@@ -5,36 +5,28 @@ paths:
   logs_dir: "logs/"
 
 datasets:
-  swat: "11-Mar-2026_0900_1700.csv" # SWaT
-  wadi_train: "WADI_14days_new.csv" # Eğitim için WADI
-  wadi_test: "WADI_attackdataLABLE.csv" # Test için WADI
+  swat: "11-Mar-2026_0900_1700.csv"
+  wadi_train: "WADI_14days_new.csv"
+  wadi_test: "WADI_attackdataLABLE.csv"
 
-# deney protokolu
 split_ratios:
-  train: 0.60 #
-  validation: 0.20 #
-  test: 0.20 #
+  train: 0.60
+  validation: 0.20
+  test: 0.20
 
-# tum derin ogrenme modelleri LSTM, GRU, 1D-CNN icin sabit egitim parametreleri
 training:
-  max_epochs: 50 # Epoch üst sınırı
-  batch_size: 32 #
-  early_stopping_patience: 5 # Validation loss takibi için
-  random_seeds: [42, 123, 2026, 7, 999] # 5 farklı seed değeri
-
-# otomat tabanli model parametreleri
+  max_epochs: 50
+  batch_size: 32
+  early_stopping_patience: 5
+  random_seeds: [42, 123, 2026, 7, 999]
 
 automata:
-  # Referans deneyler için sabit bırakılacak başlangıç değerleri
-  window_size: 4 #
-  alphabet_size: 3 #
+  window_size: 4
+  alphabet_size: 3
+  experiment_window_sizes: [3, 4, 5, 6]
+  experiment_alphabet_sizes: [3, 4, 5, 6]
 
-  # Parametre analizi deneyleri için kullanılacak varyasyon dizileri
-  experiment_window_sizes: [3, 4, 5, 6] #
-  experiment_alphabet_sizes: [3, 4, 5, 6] #
-
-# gurultu deneyi ayarlari
 noise:
-  type: "gaussian" # Gürültü eklenmiş veri senaryosu
+  type: "gaussian"
   mean: 0.0
-  std_dev: 0.1 # İhtiyaca göre test aşamasında değiştirilebilir
+  std_dev: 0.1
