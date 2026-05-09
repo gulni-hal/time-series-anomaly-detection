@@ -41,10 +41,13 @@ class ExperimentLogger:
         csv_path  = os.path.join(self.log_dir, f"results_{self.run_id}.csv")
         json_path = os.path.join(self.log_dir, f"results_{self.run_id}.json")
 
+        all_keys = list(dict.fromkeys(k for r in self.records for k in r.keys()))
         with open(csv_path, "w", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=self.records[0].keys())
+            writer = csv.DictWriter(f, fieldnames=all_keys, extrasaction="ignore")
             writer.writeheader()
-            writer.writerows(self.records)
+            for record in self.records:
+                row = {k: record.get(k, "") for k in all_keys}
+                writer.writerow(row)
 
         with open(json_path, "w") as f:
             json.dump(self.records, f, indent=2)
