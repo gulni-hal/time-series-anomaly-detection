@@ -1,22 +1,25 @@
-"""
-Ana Deney Koşucusu
-Çalıştır: py main.py
-"""
-
 import numpy as np
 import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
 
 from src.pipeline.data_loader import load_config, prepare_swat, prepare_wadi, add_gaussian_noise
 from src.models.automata import ProbabilisticAutomata, extract_patterns
-from src.models.deep_learning import get_model, make_sequences, to_loader, train_model, evaluate_model
+from src.models.deep_learning import get_model, make_sequences, train_model, evaluate_model, find_best_threshold
 from src.utils.metrics import compute_metrics
 from src.utils.logger import ExperimentLogger
-from src.explainability.explainer import AutomataExplainer
 
 
-def run_automata(data: dict, scenario: str, seed: int, ds_name: str,
-                 cfg: dict, logger: ExperimentLogger):
+def get_pos_weight(y_train):
+    n_normal  = int((y_train == 0).sum())
+    n_anomaly = int((y_train == 1).sum())
+    if n_anomaly == 0:
+        return 1.0
+    w = float(n_normal) / float(n_anomaly)
+    print("    Class weight: " + str(round(w, 2)))
+    return w
+
+
+def run_automata(data, scenario, seed, ds_name, cfg, logger):
     np.random.seed(seed)
     X_train = data["X_train_pca"]
     X_val   = data["X_val_pca"]
@@ -31,11 +34,9 @@ def run_automata(data: dict, scenario: str, seed: int, ds_name: str,
 
     model = ProbabilisticAutomata(ws, ab)
     model.fit(X_train)
-    model.set_threshold(X_val)
+    model.set_threshold(X_val, percentile=10.0)
 
     preds, scores, explanations = model.predict_with_scores(X_test)
-
-    # Boyut eşitle
     min_len = min(len(preds), len(y_test))
     metrics = compute_metrics(y_test[:min_len], preds[:min_len])
 
@@ -47,18 +48,10 @@ def run_automata(data: dict, scenario: str, seed: int, ds_name: str,
 
     logger.log("Automata", ds_name, seed, scenario, metrics,
                model.train_time, model.infer_time, extra)
-
-    # İlk seed'de açıklama örneği göster
-    if seed == cfg["training"]["random_seeds"][0] and scenario == "original":
-        explainer = AutomataExplainer(model)
-        exp = explainer.explain_window(X_test[:model.window_size*2])
-        explainer.print_explanation(exp)
-
     return model
 
 
-def run_dl(model_name: str, data: dict, scenario: str, seed: int,
-           ds_name: str, cfg: dict, logger: ExperimentLogger):
+def run_dl(model_name, data, scenario, seed, ds_name, cfg, logger):
     np.random.seed(seed)
     X_train = data["X_train"]
     X_val   = data["X_val"]
@@ -71,16 +64,17 @@ def run_dl(model_name: str, data: dict, scenario: str, seed: int,
     Xs_vl, ys_vl = make_sequences(X_val,   data["y_val"])
     Xs_te, ys_te = make_sequences(X_test,  data["y_test"])
 
-    bs   = cfg["training"]["batch_size"]
-    tr_l = to_loader(Xs_tr, ys_tr, bs)
-    vl_l = to_loader(Xs_vl, ys_vl, bs, shuffle=False)
-    te_l = to_loader(Xs_te, ys_te, bs, shuffle=False)
-
+    pos_weight = get_pos_weight(data["y_train"])
     model = get_model(model_name, X_train.shape[1])
-    model, train_time = train_model(model, tr_l, vl_l, cfg, seed)
-    preds, y_true, infer_time = evaluate_model(model, te_l)
+    model, train_time = train_model(model, (Xs_tr, ys_tr), (Xs_vl, ys_vl), cfg, seed, pos_weight)
 
-    metrics = compute_metrics(y_true, preds)
+    best_t = find_best_threshold(model, (Xs_vl, ys_vl), ys_vl)
+
+    preds, y_true, infer_time = evaluate_model(model, (Xs_te, ys_te))
+    print("    Test pred min=" + str(round(float(preds.min()), 4)) +
+          " max=" + str(round(float(preds.max()), 4)))
+
+    metrics = compute_metrics(y_true, preds, threshold=best_t)
     logger.log(model_name, ds_name, seed, scenario, metrics, train_time, infer_time)
 
 
@@ -89,34 +83,25 @@ def main():
     logger = ExperimentLogger(cfg["paths"]["logs_dir"])
     seeds  = cfg["training"]["random_seeds"]
 
-    datasets = {
-        "SWAT": prepare_swat,
-        "WADI": prepare_wadi,
-    }
-
+    datasets = {"SWAT": prepare_swat, "WADI": prepare_wadi}
     dl_models = ["LSTM", "GRU", "CNN1D"]
     scenarios = ["original", "noisy"]
 
     for ds_name, prepare_fn in datasets.items():
         data = prepare_fn(cfg)
-
         for seed in seeds:
-            print(f"\n  → {ds_name} | Seed: {seed}")
-
-            # DL modelleri
+            print("\n  -> " + ds_name + " | Seed: " + str(seed))
             for model_name in dl_models:
                 for scenario in scenarios:
-                    print(f"    [{model_name}] {scenario}...")
+                    print("    [" + model_name + "] " + scenario + "...")
                     run_dl(model_name, data, scenario, seed, ds_name, cfg, logger)
-
-            # Automata (original + noisy + unseen)
             for scenario in scenarios + ["unseen"]:
-                print(f"    [Automata] {scenario}...")
+                print("    [Automata] " + scenario + "...")
                 run_automata(data, scenario, seed, ds_name, cfg, logger)
 
     logger.save()
     logger.print_summary()
-    print("\n[✓] Tüm deneyler tamamlandı!")
+    print("\n[OK] Done!")
 
 
 if __name__ == "__main__":
