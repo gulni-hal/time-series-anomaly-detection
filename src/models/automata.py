@@ -35,7 +35,7 @@ def extract_patterns(series_1d: np.ndarray, window_size: int, alphabet_size: int
     for i in range(0, n - window_size + 1, window_size):
         segment = series_1d[i:i + window_size]
         if len(segment) == window_size:
-            paa = paa_transform(segment, window_size)
+            paa = paa_transform(segment, 1)  # segment_size=1 → window_size PAA values → window_size-char SAX
             sax = sax_transform(paa, alphabet_size)
             patterns.append(sax)
     return patterns
@@ -90,38 +90,80 @@ class ProbabilisticAutomata:
         print(f"  [Automata] Eşik: {self.threshold:.4f} (p{percentile})")
         return self
 
-    def _nearest(self, pattern: str) -> str:
+    def set_threshold_f1(self, X_val_pca: np.ndarray, y_val: np.ndarray):
+        """Find threshold that maximises F1 on the validation set."""
+        from sklearn.metrics import precision_recall_curve
+        scores, _ = self._score_series(X_val_pca)
+        min_len = min(len(scores), len(y_val))
+        scores_v = scores[:min_len]
+        y_v = y_val[:min_len]
+
+        if y_v.sum() == 0:
+            self.threshold = np.percentile(scores_v, 10.0)
+            print(f"  [Automata] No val positives — fallback p10: {self.threshold:.4f}")
+            return self
+
+        # anomaly = score < threshold  →  negate so higher = more anomalous
+        neg_scores = -scores_v
+        precision, recall, thresholds = precision_recall_curve(y_v, neg_scores)
+        f1_scores = 2 * precision * recall / (precision + recall + 1e-10)
+        best_idx = int(np.argmax(f1_scores[:-1]))
+        self.threshold = -float(thresholds[best_idx])
+        best_f1 = float(f1_scores[best_idx])
+        print(f"  [Automata] F1-optimal threshold: {self.threshold:.4f} (val F1={round(best_f1, 4)})")
+        return self
+
+    def _levenshtein_nearest(self, pattern: str) -> str:
         if not self.vocabulary:
             return pattern
         return min(self.vocabulary, key=lambda p: levenshtein_distance(pattern, p))
 
-    def _score_series(self, X_pca: np.ndarray, chunk: int = 5):
+    def _score_series(self, X_pca: np.ndarray):
+        """
+        Point-level scoring: each input timestep receives a log-probability score.
+
+        Old approach grouped patterns into fixed chunks, producing ~n/20 scores for
+        n timesteps. min_len alignment then compared only the first n/20 labels,
+        missing WADI attacks that occur later in the series (F1=0).
+
+        New approach: transition score for pattern pair (i, i+1) is broadcast to
+        all timesteps covered by pattern i+1, so output length == input length and
+        aligns 1-to-1 with y_test.
+        """
         series   = X_pca.flatten()
+        n_points = len(series)
         patterns = extract_patterns(series, self.window_size, self.alphabet_size)
-        scores, explanations = [], []
+        explanations = []
 
-        for i in range(0, len(patterns) - chunk, chunk):
-            sub    = patterns[i:i+chunk]
-            log_p  = 0.0
-            exp    = {"transitions": [], "unseen": []}
+        if len(patterns) < 2:
+            return np.zeros(n_points), explanations
 
-            for j in range(len(sub) - 1):
-                src, dst = sub[j], sub[j+1]
-                mapped   = src
-                if src not in self.transition_probs:
-                    mapped = self._nearest(src)
-                    exp["unseen"].append({
-                        "original": src, "mapped_to": mapped,
-                        "distance": levenshtein_distance(src, mapped)
-                    })
-                prob = self.transition_probs.get(mapped, {}).get(dst, 1e-6)
-                log_p += np.log(prob + 1e-10)
-                exp["transitions"].append({"from": mapped, "to": dst, "prob": round(prob, 6)})
+        # Score 0.0 (neutral) for the first window — no predecessor exists
+        point_scores = np.zeros(n_points)
 
-            scores.append(log_p)
+        for i in range(len(patterns) - 1):
+            src, dst = patterns[i], patterns[i + 1]
+            exp      = {"transitions": [], "unseen": []}
+
+            mapped = src
+            if src not in self.transition_probs:
+                mapped = self._levenshtein_nearest(src)
+                exp["unseen"].append({
+                    "original": src, "mapped_to": mapped,
+                    "distance": levenshtein_distance(src, mapped)
+                })
+
+            prob  = self.transition_probs.get(mapped, {}).get(dst, 1e-6)
+            log_p = np.log(prob + 1e-10)
+            exp["transitions"].append({"from": mapped, "to": dst, "prob": round(prob, 6)})
+
+            # Assign score to the timestep range of the destination pattern
+            t_start = (i + 1) * self.window_size
+            t_end   = min(t_start + self.window_size, n_points)
+            point_scores[t_start:t_end] = log_p
             explanations.append(exp)
 
-        return np.array(scores) if scores else np.array([self.threshold or -10]), explanations
+        return point_scores, explanations
 
     def predict(self, X_pca: np.ndarray):
         t0 = time.perf_counter()
@@ -145,7 +187,7 @@ class ProbabilisticAutomata:
 
         src, dst   = patterns[0], patterns[1]
         is_unseen  = src not in self.transition_probs
-        mapped     = self._nearest(src) if is_unseen else src
+        mapped     = self._levenshtein_nearest(src) if is_unseen else src
         prob       = self.transition_probs.get(mapped, {}).get(dst, 1e-6)
         path_prob  = prob
         log_p      = np.log(path_prob + 1e-10)

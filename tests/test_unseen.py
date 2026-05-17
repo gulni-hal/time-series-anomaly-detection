@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 """
-Birim Testleri — Levenshtein ve Unseen Pattern
+Birim Testleri -- Levenshtein ve Unseen Pattern
 Rubrik: 5 Puan
-Çalıştır: py tests/test_unseen.py
+Calistir: python tests/test_unseen.py
 """
 
 import sys, os
@@ -59,7 +60,7 @@ def test_automata_no_crash_on_unseen():
     model.set_threshold(series[400:500].reshape(-1, 1))
     noisy = (series[500:] + np.random.randn(100) * 5).reshape(-1, 1)
     preds = model.predict(noisy)
-    assert len(preds) >= 0, "Unseen pattern'larda sistem çökmemeli"
+    assert len(preds) >= 0, "Unseen pattern'larda sistem cokmemeli"
 
 def test_explain_format():
     np.random.seed(42)
@@ -70,7 +71,7 @@ def test_explain_format():
     exp = model.explain(series[650:680].reshape(-1, 1), time_step=650)
     for key in ["time_step", "state", "pattern", "status", "mapped_to",
                 "probability", "decision", "confidence"]:
-        assert key in exp, f"Eksik anahtar: {key}"
+        assert key in exp, "Eksik anahtar: " + key
 
 
 if __name__ == "__main__":
@@ -86,10 +87,10 @@ if __name__ == "__main__":
     for test in tests:
         try:
             test()
-            print(f"[✓] {test.__name__}")
+            print("[PASS] " + test.__name__)
             passed += 1
         except AssertionError as e:
-            print(f"[✗] {test.__name__}: {e}")
+            print("[FAIL] " + test.__name__ + ": " + str(e))
 
-    print(f"\n{'='*40}")
-    print(f"Sonuç: {passed}/{len(tests)} test geçti")
+    print("\n" + "=" * 40)
+    print("Sonuc: " + str(passed) + "/" + str(len(tests)) + " test gecti")

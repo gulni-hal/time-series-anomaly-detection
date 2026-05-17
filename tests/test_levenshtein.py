@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 """
-Birim Testleri — Levenshtein ve Unseen Pattern Yönetimi
-Rubrik: "Unseen veri yönetimi (Levenshtein) ve buna ait birim testler (5 Puan)"
-Çalıştır: python tests/test_levenshtein.py
+Birim Testleri -- Levenshtein ve Unseen Pattern Yonetimi
+Rubrik: "Unseen veri yonetimi (Levenshtein) ve buna ait birim testler (5 Puan)"
+Calistir: python tests/test_levenshtein.py
 """
 
 import sys, os
@@ -11,10 +12,10 @@ import numpy as np
 
 
 def test_levenshtein_same():
-    assert levenshtein_distance("abc", "abc") == 0, "Aynı string → 0"
+    assert levenshtein_distance("abc", "abc") == 0, "Ayni string -> 0"
 
 def test_levenshtein_one_substitution():
-    assert levenshtein_distance("aab", "abc") == 2, "2 karakter farkı"
+    assert levenshtein_distance("aab", "abc") == 2, "2 karakter farki"
 
 def test_levenshtein_insertion():
     assert levenshtein_distance("ab", "abc") == 1, "1 ekleme"
@@ -30,34 +31,33 @@ def test_levenshtein_single_char():
     assert levenshtein_distance("a", "b") == 1
 
 def test_nearest_pattern_found():
-    """Unseen pattern → sözlükteki en yakın eşleme doğru mu?"""
+    """Unseen pattern -> sozlukteki en yakin esleme dogru mu?"""
     model = ProbabilisticAutomata(window_size=4, alphabet_size=3)
     model.vocabulary = {"aab", "abc", "bcc", "aaa"}
-    # "adc" → en yakın "abc" (1 değişim) veya "aab" (2 değişim)
+    # "adc" -> en yakin "abc" (1 degisim) veya "aab" (2 degisim)
     nearest = model._levenshtein_nearest("adc")
-    assert nearest in model.vocabulary, "Eşleme sözlükte olmalı"
+    assert nearest in model.vocabulary, "Esleme sozlukte olmali"
     dist = levenshtein_distance("adc", nearest)
-    assert dist <= 2, f"Mesafe çok büyük: {dist}"
+    assert dist <= 2, "Mesafe cok buyuk: " + str(dist)
 
 def test_unseen_in_predict():
-    """Eğitimde görülmemiş pattern'larla prediction çökmemeli."""
+    """Egitimde gorulmemis pattern'larla prediction cokmemeli."""
     np.random.seed(42)
     series = np.sin(np.linspace(0, 6 * np.pi, 600))
     model  = ProbabilisticAutomata(window_size=4, alphabet_size=3)
     model.fit(series[:400])
     model.set_threshold(series[400:500])
 
-    # Tamamen farklı (yüksek gürültülü) sinyal → unseen pattern üretebilir
     noisy = series[500:] + np.random.randn(100) * 5
     try:
         preds = model.predict(noisy)
         assert len(preds) >= 0
-        print("[✓] Unseen pattern → sistem çökmedi, tahmin üretildi")
+        print("[OK] Unseen pattern -> sistem cokmedi, tahmin uretildi")
     except Exception as e:
-        raise AssertionError(f"Unseen pattern sırasında hata: {e}")
+        raise AssertionError("Unseen pattern sirasinda hata: " + str(e))
 
 def test_explain_output_format():
-    """Açıklanabilirlik çıktısı doğru anahtarları içermeli."""
+    """Aciklanabilirlik ciktisi dogru anahtarlari icermeli."""
     np.random.seed(42)
     series = np.sin(np.linspace(0, 10 * np.pi, 800))
     model  = ProbabilisticAutomata(window_size=4, alphabet_size=3)
@@ -65,10 +65,11 @@ def test_explain_output_format():
     model.set_threshold(series[500:650])
 
     explanation = model.explain(series[650:680], time_step=650)
-    required_keys = {"time_step", "state", "pattern", "status", "mapped_to", "probability", "decision", "confidence"}
+    required_keys = {"time_step", "state", "pattern", "status", "mapped_to",
+                     "probability", "decision", "confidence"}
     for key in required_keys:
-        assert key in explanation, f"Eksik anahtar: {key}"
-    print(f"[✓] Açıklama formatı doğru: {explanation}")
+        assert key in explanation, "Eksik anahtar: " + key
+    print("[OK] Aciklama formati dogru: " + str(list(explanation.keys())))
 
 
 if __name__ == "__main__":
@@ -88,10 +89,10 @@ if __name__ == "__main__":
     for test in tests:
         try:
             test()
-            print(f"[✓] {test.__name__}")
+            print("[PASS] " + test.__name__)
             passed += 1
         except AssertionError as e:
-            print(f"[✗] {test.__name__}: {e}")
+            print("[FAIL] " + test.__name__ + ": " + str(e))
 
-    print(f"\n{'='*40}")
-    print(f"Sonuç: {passed}/{len(tests)} test geçti")
+    print("\n" + "=" * 40)
+    print("Sonuc: " + str(passed) + "/" + str(len(tests)) + " test gecti")

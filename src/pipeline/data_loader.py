@@ -22,24 +22,25 @@ def load_swat(cfg):
     return df
 
 
-def load_wadi_combined(cfg, max_train_rows=100000):
-    # Normal veri
+def load_wadi_combined(cfg, max_total_rows=50000):
+    # Split budget: 60% normal, 40% attack (ensures attacks are present)
+    n_normal = int(max_total_rows * 0.6)
+    n_attack = max_total_rows - n_normal
+
     train_path = os.path.join("data", cfg["datasets"]["wadi_train"])
-    df_train = pd.read_csv(train_path, nrows=max_train_rows)
+    df_train = pd.read_csv(train_path, nrows=n_normal)
     df_train = df_train.drop(columns=["Row", "Date", "Time"], errors="ignore")
     df_train = df_train.apply(pd.to_numeric, errors="coerce").fillna(0)
     df_train["label"] = 0
 
-    # Anomalili veri
     test_path = os.path.join("data", cfg["datasets"]["wadi_test"])
-    df_test = pd.read_csv(test_path, header=1)
+    df_test = pd.read_csv(test_path, header=1, nrows=n_attack)
     label_col = "Attack LABLE (1:No Attack, -1:Attack)"
     labels = (df_test[label_col] == -1).astype(int)
     df_test = df_test.drop(columns=["Row ", "Date ", "Time ", label_col], errors="ignore")
     df_test = df_test.apply(pd.to_numeric, errors="coerce").fillna(0)
     df_test["label"] = labels.values
 
-    # Ortak kolonlar
     common_cols = sorted(list(set(df_train.columns) & set(df_test.columns)))
     df_combined = pd.concat([df_train[common_cols], df_test[common_cols]], ignore_index=True)
 
@@ -50,10 +51,7 @@ def load_wadi_combined(cfg, max_train_rows=100000):
 
 
 def split_data_stratified(df, cfg, seed=42):
-    """
-    Stratified split: anomali ornekleri her bolumde dengeli dagitilir.
-    Zaman serisi sirasi her sinif icinde korunur.
-    """
+    """Stratified split — keeps anomaly rate equal across splits."""
     tr_r = cfg["split_ratios"]["train"]
     vl_r = cfg["split_ratios"]["validation"]
 
@@ -78,6 +76,22 @@ def split_data_stratified(df, cfg, seed=42):
     test  = df.loc[test_idx].reset_index(drop=True)
 
     print("  Bolme: Train=" + str(len(train)) + " (anomali=" + str(int(train['label'].sum())) +
+          "), Val=" + str(len(val)) + " (anomali=" + str(int(val['label'].sum())) +
+          "), Test=" + str(len(test)) + " (anomali=" + str(int(test['label'].sum())) + ")")
+    return train, val, test
+
+
+def split_data_temporal(df, cfg):
+    """Temporal split — preserves time order so val/test distributions stay consistent."""
+    tr_r = cfg["split_ratios"]["train"]
+    vl_r = cfg["split_ratios"]["validation"]
+    n = len(df)
+    t = int(n * tr_r)
+    v = int(n * (tr_r + vl_r))
+    train = df.iloc[:t].reset_index(drop=True)
+    val   = df.iloc[t:v].reset_index(drop=True)
+    test  = df.iloc[v:].reset_index(drop=True)
+    print("  Bolme (temporal): Train=" + str(len(train)) + " (anomali=" + str(int(train['label'].sum())) +
           "), Val=" + str(len(val)) + " (anomali=" + str(int(val['label'].sum())) +
           "), Test=" + str(len(test)) + " (anomali=" + str(int(test['label'].sum())) + ")")
     return train, val, test

@@ -28,7 +28,7 @@ class AutomataExplainer:
 
         # Unseen → Levenshtein eşleme
         if is_unseen:
-            mapped   = m._nearest(src)
+            mapped   = m._levenshtein_nearest(src)
             distance = levenshtein_distance(src, mapped)
         else:
             mapped   = src
