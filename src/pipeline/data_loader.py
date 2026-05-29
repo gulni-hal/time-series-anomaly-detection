@@ -44,6 +44,7 @@ def load_skab(data_dir):
 def load_batadal(file_path):
     """
     BATADAL veri setini yükler ve gereksiz zaman sütunlarını kaldırır.
+    Etiketleri kesin olarak 0 ve 1 formatına dönüştürür.
     """
     if not os.path.exists(file_path):
         raise ValueError(f"BATADAL verisi {file_path} konumunda bulunamadı!")
@@ -57,6 +58,12 @@ def load_batadal(file_path):
     # BATADAL etiket sütununun ismindeki olası boşlukları temizle
     df.columns = df.columns.str.strip()
     
+    # HATA ÇÖZÜMÜ: PyTorch BCELoss sadece 0 ve 1 bekler.
+    # BATADAL'daki -999 gibi "Normal" veri etiketlerini 0'a çeviriyoruz.
+    # Sadece değeri tam 1 olanları (Anomali) 1 bırakıyoruz.
+    if 'ATT_FLAG' in df.columns:
+        df['ATT_FLAG'] = df['ATT_FLAG'].apply(lambda x: 1 if x == 1 else 0)
+        
     return df
 
 def load_dataset(dataset_name, config_paths):

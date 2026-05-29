@@ -25,9 +25,15 @@ class ProbabilisticAutomata:
         states = []
         for i in range(len(data_1d) - self.window_size + 1):
             window = data_1d[i : i + self.window_size]
-            paa_val = self.paa(window)
-            state = self.sax(paa_val)
-            states.append(str(state))
+            
+            # HATA ÇÖZÜMÜ: Tüm pencerenin ortalamasını tek harfe çevirmek yerine, 
+            # penceredeki her noktayı sembole çevirip birleştiriyoruz (Örn: "1201")
+            pattern = ""
+            for val in window:
+                symbol = str(np.digitize(val, self.breakpoints))
+                pattern += symbol
+                
+            states.append(pattern)
         return states
 
     def fit(self, data_1d):

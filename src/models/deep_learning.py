@@ -1,60 +1,47 @@
 import torch
 import torch.nn as nn
 
-class LSTMAutoencoder(nn.Module):
-    def __init__(self, input_dim, hidden_dim=64, num_layers=2, dropout=0.2):
-        super(LSTMAutoencoder, self).__init__()
-        self.hidden_dim = hidden_dim
-        
-        # Encoder (Kodlayıcı)
-        self.encoder = nn.LSTM(
-            input_size=input_dim, 
-            hidden_size=hidden_dim, 
-            num_layers=num_layers, 
-            batch_first=True, 
-            dropout=dropout if num_layers > 1 else 0
-        )
-        
-        # Decoder (Çözücü)
-        self.decoder = nn.LSTM(
-            input_size=hidden_dim, 
-            hidden_size=input_dim, 
-            num_layers=num_layers, 
-            batch_first=True, 
-            dropout=dropout if num_layers > 1 else 0
-        )
+class LSTMClassifier(nn.Module):
+    def __init__(self, input_dim, hidden_dim=64, num_layers=1, dropout=0.2):
+        super(LSTMClassifier, self).__init__()
+        # Batch_first=True -> (batch, seq_len, features)
+        self.lstm = nn.LSTM(input_size=input_dim, hidden_size=hidden_dim, 
+                            num_layers=num_layers, batch_first=True, 
+                            dropout=dropout if num_layers > 1 else 0)
+        self.dropout = nn.Dropout(dropout)
+        self.fc1 = nn.Linear(hidden_dim, 32)
+        self.relu = nn.ReLU()
+        self.fc2 = nn.Linear(32, 1) # Tek çıktı: 0 veya 1
+        self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
-        # x boyutu: (batch_size, sequence_length, input_dim)
-        encoded_output, (hidden, cell) = self.encoder(x)
-        
-        # Decoder'a giriş olarak encoder'ın son durumunu (hidden state) serinin uzunluğu kadar kopyalıyoruz
-        seq_len = x.shape[1]
-        decoder_input = hidden[-1].unsqueeze(1).repeat(1, seq_len, 1)
-        
-        decoded_output, _ = self.decoder(decoder_input)
-        return decoded_output
+        out, (hidden, cell) = self.lstm(x)
+        out = out[:, -1, :] # Sadece son zaman adımının çıktısını al
+        out = self.dropout(out)
+        out = self.relu(self.fc1(out))
+        out = self.sigmoid(self.fc2(out))
+        return out
 
-class CNN1DAutoencoder(nn.Module):
-    def __init__(self, input_dim, sequence_length, hidden_dim=64):
-        super(CNN1DAutoencoder, self).__init__()
+class CNN1DClassifier(nn.Module):
+    def __init__(self, input_dim, seq_len):
+        super(CNN1DClassifier, self).__init__()
+        self.conv1 = nn.Conv1d(in_channels=input_dim, out_channels=64, kernel_size=3, padding=1)
+        self.relu = nn.ReLU()
+        self.pool = nn.MaxPool1d(kernel_size=2)
+        self.flatten = nn.Flatten()
         
-        self.encoder = nn.Sequential(
-            nn.Conv1d(in_channels=input_dim, out_channels=hidden_dim, kernel_size=3, padding=1),
-            nn.ReLU(),
-            nn.MaxPool1d(kernel_size=2)
-        )
-        
-        self.decoder = nn.Sequential(
-            nn.Upsample(scale_factor=2),
-            nn.Conv1d(in_channels=hidden_dim, out_channels=input_dim, kernel_size=3, padding=1),
-            nn.Sigmoid() # Eğer veri 0-1 arası ölçeklendiyse Sigmoid, değilse kaldırılabilir
-        )
+        # MaxPool sonrası boyut yarıya düşer
+        pooled_len = seq_len // 2
+        self.fc1 = nn.Linear(64 * pooled_len, 50)
+        self.fc2 = nn.Linear(50, 1)
+        self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
-        # CNN1D, (batch, channels, length) formatı bekler. Girdiyi (batch, length, input_dim)'den çeviriyoruz
+        # PyTorch Conv1D (batch, channels, seq_len) bekler
         x = x.transpose(1, 2)
-        encoded = self.encoder(x)
-        decoded = self.decoder(encoded)
-        # Çıktıyı tekrar orijinal (batch, length, input_dim) formatına döndür
-        return decoded.transpose(1, 2)
+        x = self.relu(self.conv1(x))
+        x = self.pool(x)
+        x = self.flatten(x)
+        x = self.relu(self.fc1(x))
+        x = self.sigmoid(self.fc2(x))
+        return x

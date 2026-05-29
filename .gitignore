@@ -2,9 +2,9 @@
 data/
 !data/.gitkeep
 
-logs/
-outputs/
-!outputs/.gitkeep
+# logs/
+# outputs/
+# !outputs/.gitkeep
 
 __pycache__/
 *.py[cod]

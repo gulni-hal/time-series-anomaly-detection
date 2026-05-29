@@ -4,45 +4,42 @@ import torch.optim as optim
 import numpy as np
 
 def train_deep_learning(model, train_loader, val_loader, config_dl):
-    """Derin öğrenme modelini (LSTM/CNN) erken durdurma (Early Stopping) ile eğitir."""
-    criterion = nn.MSELoss()
+    """Derin öğrenme modelini gözetimli sınıflandırma olarak eğitir."""
+    criterion = nn.BCELoss() # HATA ÇÖZÜMÜ: Autoencoder yerine Sınıflandırıcı Kaybı
     optimizer = optim.Adam(model.parameters(), lr=config_dl.get('learning_rate', 1e-3))
     
-    epochs = config_dl['epochs']
-    patience = config_dl['patience']
+    epochs = config_dl.get('max_epochs', 50) 
+    patience = config_dl.get('early_stopping_patience', 5)
+    
     best_loss = float('inf')
     patience_counter = 0
     
     for epoch in range(epochs):
         model.train()
-        train_loss = 0.0
-        
         for batch in train_loader:
-            batch_x = batch[0] # HATA ÇÖZÜMÜ BURADA: DataLoader'dan gelen tuple'ın sadece girdisini al
+            batch_x, batch_y = batch[0], batch[1] # Artık etiketleri (y) de alıyoruz
+            
             optimizer.zero_grad()
             output = model(batch_x)
-            loss = criterion(output, batch_x) # Autoencoder: Girdi ile Çıktı arasındaki farkı minimize et
+            loss = criterion(output.squeeze(), batch_y) # Tahmin ile gerçek etiketi karşılaştır
             loss.backward()
             optimizer.step()
-            train_loss += loss.item()
             
         # Validation
         model.eval()
         val_loss = 0.0
         with torch.no_grad():
             for batch in val_loader:
-                batch_x = batch[0] # HATA ÇÖZÜMÜ BURADA
+                batch_x, batch_y = batch[0], batch[1]
                 output = model(batch_x)
-                loss = criterion(output, batch_x)
+                loss = criterion(output.squeeze(), batch_y)
                 val_loss += loss.item()
                 
         val_loss /= len(val_loader)
         
-        # Early Stopping Kontrolü
         if val_loss < best_loss:
             best_loss = val_loss
             patience_counter = 0
-            # torch.save(model.state_dict(), 'best_model.pth') # Modeli kaydet
         else:
             patience_counter += 1
             if patience_counter >= patience:
