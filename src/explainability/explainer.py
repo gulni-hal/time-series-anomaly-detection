@@ -1,100 +1,66 @@
-"""
-Olasılıksal Açıklanabilirlik Modülü
-Rubrik Bölüm X — State, pattern, transition, path probability, confidence score
-"""
-
-import json
-import numpy as np
-from src.models.automata import extract_patterns, levenshtein_distance
-
+import pandas as pd
 
 class AutomataExplainer:
-    def __init__(self, automata_model):
-        self.model = automata_model
+    def __init__(self, automata, unseen_handler, threshold=0.01):
+        self.automata = automata
+        self.unseen_handler = unseen_handler
+        self.threshold = threshold # Anomali tespiti için olasılık eşiği
+        self.history = []
 
-    def explain_window(self, series_1d: np.ndarray, time_step: int = 0) -> dict:
+    def explain_sequence(self, sequence_states):
         """
-        Tek bir pencere için tam açıklama üretir.
-        Döndürür: JSON uyumlu dict (rubrik format)
+        Zaman serisindeki durum geçişlerini adım adım açıklar.
+        sequence_states: Otomatanın SAX ile çıkardığı durumlar listesi.
         """
-        m = self.model
-        patterns = extract_patterns(series_1d.flatten(), m.window_size, m.alphabet_size)
-
-        if len(patterns) < 2:
-            return {"error": "Yeterli pattern yok"}
-
-        src, dst  = patterns[0], patterns[1]
-        is_unseen = src not in m.transition_probs
-
-        # Unseen → Levenshtein eşleme
-        if is_unseen:
-            mapped   = m._levenshtein_nearest(src)
-            distance = levenshtein_distance(src, mapped)
-        else:
-            mapped   = src
-            distance = 0
-
-        # Geçiş olasılığı
-        prob      = m.transition_probs.get(mapped, {}).get(dst, 1e-6)
-        path_prob = prob
-        log_p     = np.log(path_prob + 1e-10)
-        decision  = "anomaly" if log_p < (m.threshold or -10) else "normal"
-
-        result = {
-            "time_step":       time_step,
-            "previous_state":  src,
-            "incoming_pattern": dst,
-            "status":          "unseen" if is_unseen else "seen",
-            "nearest_pattern": mapped,
-            "edit_distance":   distance,
-            "transitions": [
-                {
-                    "from":        mapped,
-                    "to":          dst,
-                    "probability": round(prob, 6),
-                }
-            ],
-            "path_probability": round(path_prob, 6),
-            "decision":         decision,
-            "confidence_score": round(path_prob, 6),
-            "interpretation":  (
-                "Low probability path → Anomaly candidate"
-                if decision == "anomaly"
-                else "High probability path → Normal behavior"
-            ),
-        }
-        return result
-
-    def explain_batch(self, X_pca: np.ndarray, n_samples: int = 5) -> list:
-        """İlk n_samples pencere için açıklama üretir."""
-        m       = self.model
-        series  = X_pca.flatten()
-        w       = m.window_size
-        results = []
-
-        for i in range(min(n_samples, len(series) // w)):
-            window = series[i*w:(i+2)*w]
-            if len(window) >= w:
-                exp = self.explain_window(window, time_step=i*w)
-                results.append(exp)
-
-        return results
-
-    def print_explanation(self, exp: dict):
-        """Dokümandaki örnek formatta terminale yazar."""
-        print("\n[SYSTEM DECISION]")
-        print(f"Time Step      : t = {exp.get('time_step', '?')}")
-        print(f"Previous State : \"{exp.get('previous_state', '?')}\"")
-        print(f"Incoming Pattern: \"{exp.get('incoming_pattern', '?')}\"")
-        print(f"Status         : {exp.get('status', '?').upper()}")
-        if exp.get('status') == 'unseen':
-            print(f"Nearest Pattern: \"{exp.get('nearest_pattern')}\" "
-                  f"(distance = {exp.get('edit_distance')})")
-        print("Transitions    :")
-        for t in exp.get("transitions", []):
-            print(f"  {t['from']} -> {t['to']} : {t['probability']}")
-        print(f"Path Probability: {exp.get('path_probability')}")
-        print(f"Decision       : {exp.get('decision', '?').upper()}")
-        print(f"Confidence Score: {exp.get('confidence_score')} "
-              f"({'Low' if exp.get('decision') == 'anomaly' else 'High'})")
-        print(f"Interpretation : {exp.get('interpretation', '')}")
+        self.history = []
+        path_probability = 1.0 # Başlangıç yol olasılığı
+        
+        for i in range(len(sequence_states) - 1):
+            current_state = str(sequence_states[i])
+            next_state = str(sequence_states[i + 1])
+            
+            status = "Known"
+            mapped_to = "N/A"
+            
+            # Geçiş olasılığını al
+            prob = self.automata.get_transition_probability(current_state, next_state)
+            
+            # Eğer olasılık 1e-6 gibi çok düşük bir değerse (Unseen State veya Transition)
+            if prob <= 1e-5:
+                status = "Unseen"
+                # Unseen handler ile en yakın state'i bul
+                mapped_state, dist = self.unseen_handler.handle(next_state)
+                mapped_to = mapped_state
+                # Eşlenen yeni durum üzerinden olasılığı tekrar hesapla (cezalandırılmış olarak)
+                prob = self.automata.get_transition_probability(current_state, mapped_state)
+                prob = prob / (dist + 1) # Mesafe arttıkça olasılığı düşür (Güven cezası)
+            
+            # Path probability hesaplama (Ardışık olasılıkların çarpımı)
+            # Not: Underflow olmaması için pratikte log-sum alınır ancak görsellik için çarpıyoruz.
+            path_probability *= max(prob, 1e-5) 
+            
+            # Confidence Score: Mevcut olasılığın eşiğe olan uzaklığına/oranına göre bir güven skoru
+            confidence = (1.0 - prob) if prob < self.threshold else prob
+            confidence_score = round(confidence * 100, 2)
+            
+            decision = "Anomaly" if prob < self.threshold else "Normal"
+            
+            # Zorunlu formatta kaydet
+            report_row = {
+                "time_step": i,
+                "current_state": current_state,
+                "next_pattern": next_state,
+                "status": status,
+                "mapped_to": mapped_to,
+                "transition_probability": round(prob, 5),
+                "path_probability": f"{path_probability:.2e}",
+                "confidence_score_%": confidence_score,
+                "decision": decision
+            }
+            self.history.append(report_row)
+            
+            # Path probability çok küçülürse sıfırla (Sliding window etkisi yaratmak için)
+            if (i + 1) % 10 == 0:
+                path_probability = 1.0 
+                
+        return pd.DataFrame(self.history)
