@@ -5,22 +5,18 @@ Hard-coded değer YASAK. Değiştirmek istediğin her şey buradadır.
 
 # ─── Veri Seti ────────────────────────────────────────────────────────────────
 DATASETS = {
-    "SWAT": {
-        "train": "data/raw/SWAT_train.csv",
-        "test":  "data/raw/SWAT_test.csv",
-        "label_col": "Normal/Attack",
-        "attack_label": "Attack",
+    "SKAB": {
+        "folder_path": "data/raw/SKAB/", # İçinde valve1 ve valve2 klasörleri olmalı
+        "label_col": "anomaly",          # SKAB'da hedef değişken
     },
-    "WADI": {
-        "train": "data/raw/WADI_train.csv",
-        "test":  "data/raw/WADI_test.csv",
-        "label_col": "Attack",
-        "attack_label": 1,
+    "BATADAL": {
+        "file_path": "data/raw/BATADAL/BATADAL_Training2.csv",
+        "label_col": "ATT_FLAG",         # Etiket sütunu veri setinden kontrol edilmeli (Genelde ATT_FLAG)
     },
 }
 
-# Aktif veri setleri (grup 1-20: SWAT + WADI)
-ACTIVE_DATASETS = ["SWAT", "WADI"]
+# Aktif veri setleri
+ACTIVE_DATASETS = ["SKAB", "BATADAL"]
 
 # ─── Veri Bölme (Zorunlu: 60/20/20) ──────────────────────────────────────────
 SPLIT = {
@@ -32,16 +28,16 @@ SPLIT = {
 # ─── Random Seed'ler (Zorunlu: 5 farklı) ─────────────────────────────────────
 SEEDS = [42, 123, 2026, 7, 999]
 
-# ─── Derin Öğrenme Parametreleri ──────────────────────────────────────────────
+# ─── Derin Öğrenme Parametreleri (Zorunlu sabitler) ───────────────────────────
 DL = {
-    "epochs":        50,
-    "batch_size":    32,
-    "patience":      5,          # early stopping
+    "epochs":        50,         # Epoch üst sınırı: 50
+    "batch_size":    32,         # Batch size: 32
+    "patience":      5,          # Early stopping: validation loss (patience = 5)
     "learning_rate": 1e-3,
     "hidden_size":   64,
     "num_layers":    2,
     "dropout":       0.2,
-    "models":        ["LSTM", "GRU", "CNN1D"],  # en az 2 zorunlu
+    "models":        ["LSTM", "GRU", "CNN1D"],  # En az 2'si uygulanmalı
 }
 
 # ─── Otomata Parametreleri ────────────────────────────────────────────────────
@@ -50,7 +46,7 @@ AUTOMATA = {
     "window_size":   4,
     "alphabet_size": 3,
 
-    # Parametre tarama aralığı (Tablo 4 için)
+    # Parametre varyasyonu (Analiz için)
     "window_sizes":   [3, 4, 5, 6],
     "alphabet_sizes": [3, 4, 5, 6],
 }
@@ -59,7 +55,7 @@ AUTOMATA = {
 NOISE = {
     "type":   "gaussian",
     "mean":   0.0,
-    "std":    0.05,   # ihtiyaca göre ayarla
+    "std":    0.05,
 }
 
 # ─── Çıktı Yolları ────────────────────────────────────────────────────────────

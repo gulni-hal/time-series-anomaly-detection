@@ -5,9 +5,10 @@ paths:
   logs_dir: "logs/"
 
 datasets:
-  swat: "11-Mar-2026_0900_1700.csv"
-  wadi_train: "WADI_14days_new.csv"
-  wadi_test: "WADI_attackdataLABLE.csv"
+  skab_folder: "SKAB/"
+  batadal_file: "BATADAL/BATADAL_Training2.csv"
+  skab_label: "anomaly"
+  batadal_label: "ATT_FLAG"
 
 split_ratios:
   train: 0.60
