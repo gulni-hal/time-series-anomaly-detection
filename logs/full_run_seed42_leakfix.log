@@ -1,0 +1,104 @@
+=======================================================
+Zaman Serisi Anomali Tespiti - Pipeline Baþlýyor
+=======================================================
+
+=======================================================
+[Veri Seti] SWAT iþleniyor...
+=======================================================
+  Train: 17316, Val: 5772, Test: 5772
+
+  --- Seed 42 ---
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] LSTM | SWAT | seed=42 | original | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] LSTM | SWAT | seed=42 | noisy | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] LSTM | SWAT | seed=42 | unseen | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] GRU | SWAT | seed=42 | original | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] GRU | SWAT | seed=42 | noisy | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] GRU | SWAT | seed=42 | unseen | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] CNN1D | SWAT | seed=42 | original | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] CNN1D | SWAT | seed=42 | noisy | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] CNN1D | SWAT | seed=42 | unseen | F1=1.0
+  [LOG] Automata | SWAT | seed=42 | original | F1=0.9742130535301441
+  [LOG] Automata | SWAT | seed=42 | noisy | F1=0.8711224190233878
+  [LOG] Automata | SWAT | seed=42 | unseen | F1=0.9012286884465186
+
+  [Ýstatistiksel Testler] SWAT
+    Wilcoxon LSTM vs GRU: stat=0.0000, p=1.0000
+  [LOG] Wilcoxon_LSTM_vs_GRU | SWAT | seed=all | stat_test | F1=0.0
+    Wilcoxon LSTM vs Automata: stat=0.0000, p=1.0000
+  [LOG] Wilcoxon_LSTM_vs_Automata | SWAT | seed=all | stat_test | F1=0.0
+    Wilcoxon GRU vs Automata: stat=0.0000, p=1.0000
+  [LOG] Wilcoxon_GRU_vs_Automata | SWAT | seed=all | stat_test | F1=0.0
+    Wilcoxon LSTM vs CNN1D: stat=0.0000, p=1.0000
+  [LOG] Wilcoxon_LSTM_vs_CNN1D | SWAT | seed=all | stat_test | F1=0.0
+    McNemar LSTM vs GRU: stat=0.0000, p=1.0000
+  [LOG] McNemar_LSTM_vs_GRU | SWAT | seed=42 | stat_test | F1=0.0
+    McNemar LSTM vs Automata: stat=288.0034, p=0.0000
+  [LOG] McNemar_LSTM_vs_Automata | SWAT | seed=42 | stat_test | F1=0.0
+
+  [OK] SWAT pipeline tamamlandý.
+
+=======================================================
+[Veri Seti] WADI iþleniyor...
+=======================================================
+  Train: 103681, Val: 34561, Test: 34561
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\preprocessing\_data.py:1068: RuntimeWarning: invalid value encountered in sqrt
+  xp.sqrt(self.var_), copy=False, constant_mask=constant_mask
+
+  --- Seed 42 ---
+  Early stopping tetiklendi. Epoch: 9
+  [LOG] LSTM | WADI | seed=42 | original | F1=0.8872848182918462
+  [LOG] LSTM | WADI | seed=42 | noisy | F1=0.8852694507484605
+  [LOG] LSTM | WADI | seed=42 | unseen | F1=0.8342759233121474
+  Early stopping tetiklendi. Epoch: 12
+  [LOG] GRU | WADI | seed=42 | original | F1=0.8840038406880256
+  [LOG] GRU | WADI | seed=42 | noisy | F1=0.8839224585657799
+  [LOG] GRU | WADI | seed=42 | unseen | F1=0.8128952365099156
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] CNN1D | WADI | seed=42 | original | F1=0.9291473708626511
+  [LOG] CNN1D | WADI | seed=42 | noisy | F1=0.9295044466172021
+  [LOG] CNN1D | WADI | seed=42 | unseen | F1=0.8700044934664469
+  [LOG] Automata | WADI | seed=42 | original | F1=0.8606490205472178
+  [LOG] Automata | WADI | seed=42 | noisy | F1=0.8379666568216424
+  [LOG] Automata | WADI | seed=42 | unseen | F1=0.789547329102337
+
+  [Ýstatistiksel Testler] WADI
+    Wilcoxon LSTM vs GRU: stat=0.0000, p=1.0000
+  [LOG] Wilcoxon_LSTM_vs_GRU | WADI | seed=all | stat_test | F1=0.0
+    Wilcoxon LSTM vs Automata: stat=0.0000, p=1.0000
+  [LOG] Wilcoxon_LSTM_vs_Automata | WADI | seed=all | stat_test | F1=0.0
+    Wilcoxon GRU vs Automata: stat=0.0000, p=1.0000
+  [LOG] Wilcoxon_GRU_vs_Automata | WADI | seed=all | stat_test | F1=0.0
+    Wilcoxon LSTM vs CNN1D: stat=0.0000, p=1.0000
+  [LOG] Wilcoxon_LSTM_vs_CNN1D | WADI | seed=all | stat_test | F1=0.0
+    McNemar LSTM vs GRU: stat=25.8560, p=0.0000
+  [LOG] McNemar_LSTM_vs_GRU | WADI | seed=42 | stat_test | F1=0.0
+    McNemar LSTM vs Automata: stat=24.1875, p=0.0000
+  [LOG] McNemar_LSTM_vs_Automata | WADI | seed=42 | stat_test | F1=0.0
+
+  [OK] WADI pipeline tamamlandý.
+
+=======================================================
+[Çapraz Veri Seti] Cross-dataset Deðerlendirmesi
+=======================================================
+
+  SWAT->WADI deðerlendiriliyor...
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\preprocessing\_data.py:1068: RuntimeWarning: invalid value encountered in sqrt
+  xp.sqrt(self.var_), copy=False, constant_mask=constant_mask

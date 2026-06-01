@@ -1,0 +1,42 @@
+=======================================================
+Zaman Serisi Anomali Tespiti - Pipeline Baþlýyor
+=======================================================
+
+=======================================================
+[Veri Seti] SWAT iþleniyor...
+=======================================================
+  Train: 17316, Val: 5772, Test: 5772
+
+  --- Seed 42 ---
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] LSTM | SWAT | seed=42 | original | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] LSTM | SWAT | seed=42 | noisy | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] LSTM | SWAT | seed=42 | unseen | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] GRU | SWAT | seed=42 | original | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] GRU | SWAT | seed=42 | noisy | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] GRU | SWAT | seed=42 | unseen | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] CNN1D | SWAT | seed=42 | original | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] CNN1D | SWAT | seed=42 | noisy | F1=1.0
+C:\Users\mustke\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\sklearn\metrics\_classification.py:620: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+  [LOG] CNN1D | SWAT | seed=42 | unseen | F1=1.0
+  [LOG] Automata | SWAT | seed=42 | original | F1=0.9742130535301441
+  [LOG] Automata | SWAT | seed=42 | noisy | F1=0.8711224190233878
+  [LOG] Automata | SWAT | seed=42 | unseen | F1=0.9080927591102697
+
+  --- Seed 123 ---

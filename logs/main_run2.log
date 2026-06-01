@@ -1,0 +1,343 @@
+
+============================================================
+TABLE 1 & 2 — Main Experiments (5 seeds, 2 scenarios)
+============================================================
+
+==================================================
+[SWAT] Pipeline basliyor...
+[SWAT] Yuklendi: 28860 satir, 86 ozellik
+  Bolme: Train=17316 (anomali=0), Val=5772 (anomali=0), Test=5772 (anomali=0)
+  PCA: 86 -> 1 (var=0.387)
+
+  -> SWAT | Seed: 42
+    [LSTM] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.002, 0.9809]
+  [VIZ] Saved: outputs/cm_LSTM_SWAT.png
+  [VIZ] Skipping ROC — only one class in y_true
+  [LOG] LSTM | SWAT | seed=42 | original | F1=0.0
+    [LSTM] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.002, 0.9809]
+  [LOG] LSTM | SWAT | seed=42 | noisy | F1=0.0
+    [GRU] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0112, 0.985]
+  [VIZ] Saved: outputs/cm_GRU_SWAT.png
+  [VIZ] Skipping ROC — only one class in y_true
+  [LOG] GRU | SWAT | seed=42 | original | F1=0.0
+    [GRU] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0112, 0.985]
+  [LOG] GRU | SWAT | seed=42 | noisy | F1=0.0
+    [CNN1D] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0007, 0.6134]
+  [VIZ] Saved: outputs/cm_CNN1D_SWAT.png
+  [VIZ] Skipping ROC — only one class in y_true
+  [LOG] CNN1D | SWAT | seed=42 | original | F1=0.0
+    [CNN1D] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0007, 0.6134]
+  [LOG] CNN1D | SWAT | seed=42 | noisy | F1=0.0
+    [Automata] original...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.42s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [VIZ] Saved: outputs/cm_Automata_SWAT.png
+  [VIZ] Skipping ROC — only one class in y_true
+  [VIZ] Saved: outputs/state_diagram_SWAT.png
+  [VIZ] Saved: outputs/transition_heatmap_SWAT.png
+  [LOG] Automata | SWAT | seed=42 | original | F1=0.0
+    [Automata] noisy...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.41s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [LOG] Automata | SWAT | seed=42 | noisy | F1=0.0
+    [Automata] unseen...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.41s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [LOG] Automata | SWAT | seed=42 | unseen | F1=0.0
+
+  -> SWAT | Seed: 123
+    [LSTM] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0027, 0.9617]
+  [LOG] LSTM | SWAT | seed=123 | original | F1=0.0
+    [LSTM] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0027, 0.9617]
+  [LOG] LSTM | SWAT | seed=123 | noisy | F1=0.0
+    [GRU] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0065, 0.9712]
+  [LOG] GRU | SWAT | seed=123 | original | F1=0.0
+    [GRU] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0065, 0.9712]
+  [LOG] GRU | SWAT | seed=123 | noisy | F1=0.0
+    [CNN1D] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0008, 0.6204]
+  [LOG] CNN1D | SWAT | seed=123 | original | F1=0.0
+    [CNN1D] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0008, 0.6204]
+  [LOG] CNN1D | SWAT | seed=123 | noisy | F1=0.0
+    [Automata] original...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.42s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [LOG] Automata | SWAT | seed=123 | original | F1=0.0
+    [Automata] noisy...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.40s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [LOG] Automata | SWAT | seed=123 | noisy | F1=0.0
+    [Automata] unseen...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.39s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [LOG] Automata | SWAT | seed=123 | unseen | F1=0.0
+
+  -> SWAT | Seed: 2026
+    [LSTM] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0009, 0.8821]
+  [LOG] LSTM | SWAT | seed=2026 | original | F1=0.0
+    [LSTM] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0009, 0.8821]
+  [LOG] LSTM | SWAT | seed=2026 | noisy | F1=0.0
+    [GRU] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.004, 0.9657]
+  [LOG] GRU | SWAT | seed=2026 | original | F1=0.0
+    [GRU] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.004, 0.9657]
+  [LOG] GRU | SWAT | seed=2026 | noisy | F1=0.0
+    [CNN1D] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0005, 0.5479]
+  [LOG] CNN1D | SWAT | seed=2026 | original | F1=0.0
+    [CNN1D] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0005, 0.5479]
+  [LOG] CNN1D | SWAT | seed=2026 | noisy | F1=0.0
+    [Automata] original...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.42s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [LOG] Automata | SWAT | seed=2026 | original | F1=0.0
+    [Automata] noisy...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.40s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [LOG] Automata | SWAT | seed=2026 | noisy | F1=0.0
+    [Automata] unseen...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.41s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [LOG] Automata | SWAT | seed=2026 | unseen | F1=0.0
+
+  -> SWAT | Seed: 7
+    [LSTM] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0018, 0.8669]
+  [LOG] LSTM | SWAT | seed=7 | original | F1=0.0
+    [LSTM] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0018, 0.8669]
+  [LOG] LSTM | SWAT | seed=7 | noisy | F1=0.0
+    [GRU] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0048, 0.9541]
+  [LOG] GRU | SWAT | seed=7 | original | F1=0.0
+    [GRU] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0048, 0.9541]
+  [LOG] GRU | SWAT | seed=7 | noisy | F1=0.0
+    [CNN1D] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0005, 0.4251]
+  [LOG] CNN1D | SWAT | seed=7 | original | F1=0.0
+    [CNN1D] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0005, 0.4251]
+  [LOG] CNN1D | SWAT | seed=7 | noisy | F1=0.0
+    [Automata] original...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.41s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [LOG] Automata | SWAT | seed=7 | original | F1=0.0
+    [Automata] noisy...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.40s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [LOG] Automata | SWAT | seed=7 | noisy | F1=0.0
+    [Automata] unseen...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.40s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [LOG] Automata | SWAT | seed=7 | unseen | F1=0.0
+
+  -> SWAT | Seed: 999
+    [LSTM] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0017, 0.9593]
+  [LOG] LSTM | SWAT | seed=999 | original | F1=0.0
+    [LSTM] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0017, 0.9593]
+  [LOG] LSTM | SWAT | seed=999 | noisy | F1=0.0
+    [GRU] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0042, 0.9361]
+  [LOG] GRU | SWAT | seed=999 | original | F1=0.0
+    [GRU] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0042, 0.9361]
+  [LOG] GRU | SWAT | seed=999 | noisy | F1=0.0
+    [CNN1D] original...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0005, 0.7531]
+  [LOG] CNN1D | SWAT | seed=999 | original | F1=0.0
+    [CNN1D] noisy...
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.5 (val F1=0.0) pred_range=[0.0005, 0.7531]
+  [LOG] CNN1D | SWAT | seed=999 | noisy | F1=0.0
+    [Automata] original...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.41s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [LOG] Automata | SWAT | seed=999 | original | F1=0.0
+    [Automata] noisy...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.46s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [LOG] Automata | SWAT | seed=999 | noisy | F1=0.0
+    [Automata] unseen...
+  [Automata] Eğitim: 3 pattern, 3 durum | 0.40s
+  [Automata] Eşik: -0.0984 (p10.0)
+  [LOG] Automata | SWAT | seed=999 | unseen | F1=0.0
+
+==================================================
+[WADI] Pipeline basliyor...
+[WADI] Birlestirildi: 272803 satir, 127 ozellik, anomali=9977
+  Bolme: Train=163681 (anomali=5986), Val=54560 (anomali=1995), Test=54562 (anomali=1996)
+  PCA: 127 -> 1 (var=0.201)
+
+  -> WADI | Seed: 42
+    [LSTM] original...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.8 (val F1=0.0835) pred_range=[0.0, 1.0]
+  [VIZ] Saved: outputs/cm_LSTM_WADI.png
+  [VIZ] Saved: outputs/roc_LSTM_WADI.png
+  [LOG] LSTM | WADI | seed=42 | original | F1=0.0706
+    [LSTM] noisy...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=7
+    Best threshold: 0.8 (val F1=0.0835) pred_range=[0.0, 1.0]
+  [LOG] LSTM | WADI | seed=42 | noisy | F1=0.0706
+    [GRU] original...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=16
+    Best threshold: 0.8 (val F1=0.0822) pred_range=[0.0, 1.0]
+  [VIZ] Saved: outputs/cm_GRU_WADI.png
+  [VIZ] Saved: outputs/roc_GRU_WADI.png
+  [LOG] GRU | WADI | seed=42 | original | F1=0.0706
+    [GRU] noisy...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=16
+    Best threshold: 0.8 (val F1=0.0822) pred_range=[0.0, 1.0]
+  [LOG] GRU | WADI | seed=42 | noisy | F1=0.0706
+    [CNN1D] original...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=13
+    Best threshold: 0.8 (val F1=0.0861) pred_range=[0.0, 1.0]
+  [VIZ] Saved: outputs/cm_CNN1D_WADI.png
+  [VIZ] Saved: outputs/roc_CNN1D_WADI.png
+  [LOG] CNN1D | WADI | seed=42 | original | F1=0.0706
+    [CNN1D] noisy...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=13
+    Best threshold: 0.8 (val F1=0.0861) pred_range=[0.0, 1.0]
+  [LOG] CNN1D | WADI | seed=42 | noisy | F1=0.0706
+    [Automata] original...
+  [Automata] Eğitim: 3 pattern, 3 durum | 4.77s
+  [Automata] Eşik: -0.0190 (p10.0)
+  [VIZ] Saved: outputs/cm_Automata_WADI.png
+  [VIZ] Saved: outputs/roc_Automata_WADI.png
+  [VIZ] Saved: outputs/state_diagram_WADI.png
+  [VIZ] Saved: outputs/transition_heatmap_WADI.png
+  [LOG] Automata | WADI | seed=42 | original | F1=0.0
+    [Automata] noisy...
+  [Automata] Eğitim: 3 pattern, 3 durum | 5.41s
+  [Automata] Eşik: -0.0190 (p10.0)
+  [LOG] Automata | WADI | seed=42 | noisy | F1=0.0
+    [Automata] unseen...
+  [Automata] Eğitim: 3 pattern, 3 durum | 5.38s
+  [Automata] Eşik: -0.0190 (p10.0)
+  [LOG] Automata | WADI | seed=42 | unseen | F1=0.0
+
+  -> WADI | Seed: 123
+    [LSTM] original...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=9
+    Best threshold: 0.8 (val F1=0.0863) pred_range=[0.0, 1.0]
+  [LOG] LSTM | WADI | seed=123 | original | F1=0.0706
+    [LSTM] noisy...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=9
+    Best threshold: 0.8 (val F1=0.0863) pred_range=[0.0, 1.0]
+  [LOG] LSTM | WADI | seed=123 | noisy | F1=0.0706
+    [GRU] original...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=11
+    Best threshold: 0.8 (val F1=0.0799) pred_range=[0.0, 1.0]
+  [LOG] GRU | WADI | seed=123 | original | F1=0.0706
+    [GRU] noisy...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=11
+    Best threshold: 0.8 (val F1=0.0799) pred_range=[0.0, 1.0]
+  [LOG] GRU | WADI | seed=123 | noisy | F1=0.0706
+    [CNN1D] original...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=9
+    Best threshold: 0.01 (val F1=0.0743) pred_range=[0.0, 1.0]
+  [LOG] CNN1D | WADI | seed=123 | original | F1=0.0706
+    [CNN1D] noisy...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=9
+    Best threshold: 0.01 (val F1=0.0743) pred_range=[0.0, 1.0]
+  [LOG] CNN1D | WADI | seed=123 | noisy | F1=0.0706
+    [Automata] original...
+  [Automata] Eğitim: 3 pattern, 3 durum | 10.39s
+  [Automata] Eşik: -0.0190 (p10.0)
+  [LOG] Automata | WADI | seed=123 | original | F1=0.0
+    [Automata] noisy...
+  [Automata] Eğitim: 3 pattern, 3 durum | 10.68s
+  [Automata] Eşik: -0.0190 (p10.0)
+  [LOG] Automata | WADI | seed=123 | noisy | F1=0.0
+    [Automata] unseen...
+  [Automata] Eğitim: 3 pattern, 3 durum | 9.83s
+  [Automata] Eşik: -0.0190 (p10.0)
+  [LOG] Automata | WADI | seed=123 | unseen | F1=0.0
+
+  -> WADI | Seed: 2026
+    [LSTM] original...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=8
+    Best threshold: 0.5 (val F1=0.0818) pred_range=[0.0, 1.0]
+  [LOG] LSTM | WADI | seed=2026 | original | F1=0.0706
+    [LSTM] noisy...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=8
+    Best threshold: 0.5 (val F1=0.0818) pred_range=[0.0, 1.0]
+  [LOG] LSTM | WADI | seed=2026 | noisy | F1=0.0706
+    [GRU] original...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=8
+    Best threshold: 0.35 (val F1=0.0793) pred_range=[0.0, 1.0]
+  [LOG] GRU | WADI | seed=2026 | original | F1=0.0706
+    [GRU] noisy...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=8
+    Best threshold: 0.35 (val F1=0.0793) pred_range=[0.0, 1.0]
+  [LOG] GRU | WADI | seed=2026 | noisy | F1=0.0706
+    [CNN1D] original...
+    Class weight: 26.34
+    Trained MLPClassifier iterations=12
+    Best threshold: 0.8 (val F1=0.0853) pred_range=[0.0, 1.0]
+  [LOG] CNN1D | WADI | seed=2026 | original | F1=0.0706
+    [CNN1D] noisy...
+    Class weight: 26.34

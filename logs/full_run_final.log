@@ -1,0 +1,259 @@
+=======================================================
+Zaman Serisi Anomali Tespiti - Pipeline Baþlýyor
+=======================================================
+
+=======================================================
+[Veri Seti] SKAB iþleniyor...
+=======================================================
+  Train: 13483, Val: 4494, Test: 4495
+
+  --- Seed 42 ---
+  Early stopping tetiklendi. Epoch: 10
+  [LOG] LSTM | SKAB | seed=42 | original | F1=0.5544383284123533
+  [LOG] LSTM | SKAB | seed=42 | noisy | F1=0.5561394372178246
+  [LOG] LSTM | SKAB | seed=42 | unseen | F1=0.6125193834690348
+  Early stopping tetiklendi. Epoch: 12
+  [LOG] GRU | SKAB | seed=42 | original | F1=0.473593423977095
+  [LOG] GRU | SKAB | seed=42 | noisy | F1=0.4788875376521345
+  [LOG] GRU | SKAB | seed=42 | unseen | F1=0.5576913275944327
+  Early stopping tetiklendi. Epoch: 7
+  [LOG] CNN1D | SKAB | seed=42 | original | F1=0.4324554530561501
+  [LOG] CNN1D | SKAB | seed=42 | noisy | F1=0.4342113818937697
+  [LOG] CNN1D | SKAB | seed=42 | unseen | F1=0.47817815897929394
+  [LOG] Automata | SKAB | seed=42 | original | F1=0.5269900313776835
+  [LOG] Automata | SKAB | seed=42 | noisy | F1=0.5283729322225813
+  [LOG] Automata | SKAB | seed=42 | unseen | F1=0.5789278274804383
+
+  --- Seed 123 ---
+  Early stopping tetiklendi. Epoch: 8
+  [LOG] LSTM | SKAB | seed=123 | original | F1=0.29791297609119083
+  [LOG] LSTM | SKAB | seed=123 | noisy | F1=0.3015185611591469
+  [LOG] LSTM | SKAB | seed=123 | unseen | F1=0.44078059342194326
+  Early stopping tetiklendi. Epoch: 10
+  [LOG] GRU | SKAB | seed=123 | original | F1=0.2938423631743288
+  [LOG] GRU | SKAB | seed=123 | noisy | F1=0.30452079283853967
+  [LOG] GRU | SKAB | seed=123 | unseen | F1=0.43445294309233573
+  Early stopping tetiklendi. Epoch: 10
+  [LOG] CNN1D | SKAB | seed=123 | original | F1=0.48515589558468614
+  [LOG] CNN1D | SKAB | seed=123 | noisy | F1=0.4875723277850736
+  [LOG] CNN1D | SKAB | seed=123 | unseen | F1=0.5172529978703502
+  [LOG] Automata | SKAB | seed=123 | original | F1=0.5269900313776835
+  [LOG] Automata | SKAB | seed=123 | noisy | F1=0.5269292059080501
+  [LOG] Automata | SKAB | seed=123 | unseen | F1=0.5635310771321675
+
+  --- Seed 2026 ---
+  Early stopping tetiklendi. Epoch: 10
+  [LOG] LSTM | SKAB | seed=2026 | original | F1=0.4595195776310268
+  [LOG] LSTM | SKAB | seed=2026 | noisy | F1=0.46168001085617894
+  [LOG] LSTM | SKAB | seed=2026 | unseen | F1=0.5264848830802672
+  Early stopping tetiklendi. Epoch: 7
+  [LOG] GRU | SKAB | seed=2026 | original | F1=0.22328338290480793
+  [LOG] GRU | SKAB | seed=2026 | noisy | F1=0.22892065269644857
+  [LOG] GRU | SKAB | seed=2026 | unseen | F1=0.40067827105963705
+  Early stopping tetiklendi. Epoch: 10
+  [LOG] CNN1D | SKAB | seed=2026 | original | F1=0.5468453209686299
+  [LOG] CNN1D | SKAB | seed=2026 | noisy | F1=0.5620821673061157
+  [LOG] CNN1D | SKAB | seed=2026 | unseen | F1=0.5653440069271588
+  [LOG] Automata | SKAB | seed=2026 | original | F1=0.5269900313776835
+  [LOG] Automata | SKAB | seed=2026 | noisy | F1=0.5236328979480512
+  [LOG] Automata | SKAB | seed=2026 | unseen | F1=0.5543649848443774
+
+  --- Seed 7 ---
+  Early stopping tetiklendi. Epoch: 8
+  [LOG] LSTM | SKAB | seed=7 | original | F1=0.5077978244386745
+  [LOG] LSTM | SKAB | seed=7 | noisy | F1=0.5104062923175713
+  [LOG] LSTM | SKAB | seed=7 | unseen | F1=0.5841479499351334
+  Early stopping tetiklendi. Epoch: 15
+  [LOG] GRU | SKAB | seed=7 | original | F1=0.5219929416684137
+  [LOG] GRU | SKAB | seed=7 | noisy | F1=0.521789839765096
+  [LOG] GRU | SKAB | seed=7 | unseen | F1=0.5971777124596821
+  Early stopping tetiklendi. Epoch: 10
+  [LOG] CNN1D | SKAB | seed=7 | original | F1=0.48269509272301175
+  [LOG] CNN1D | SKAB | seed=7 | noisy | F1=0.4931403217551986
+  [LOG] CNN1D | SKAB | seed=7 | unseen | F1=0.5134045097636047
+  [LOG] Automata | SKAB | seed=7 | original | F1=0.5269900313776835
+  [LOG] Automata | SKAB | seed=7 | noisy | F1=0.526762254123638
+  [LOG] Automata | SKAB | seed=7 | unseen | F1=0.5597145573219825
+
+  --- Seed 999 ---
+  Early stopping tetiklendi. Epoch: 9
+  [LOG] LSTM | SKAB | seed=999 | original | F1=0.4224078124115642
+  [LOG] LSTM | SKAB | seed=999 | noisy | F1=0.426831276735367
+  [LOG] LSTM | SKAB | seed=999 | unseen | F1=0.5204819587686629
+  Early stopping tetiklendi. Epoch: 10
+  [LOG] GRU | SKAB | seed=999 | original | F1=0.20525006741384652
+  [LOG] GRU | SKAB | seed=999 | noisy | F1=0.20796696605471704
+  [LOG] GRU | SKAB | seed=999 | unseen | F1=0.3903371158322197
+  Early stopping tetiklendi. Epoch: 10
+  [LOG] CNN1D | SKAB | seed=999 | original | F1=0.5705549074956505
+  [LOG] CNN1D | SKAB | seed=999 | noisy | F1=0.5778788233050922
+  [LOG] CNN1D | SKAB | seed=999 | unseen | F1=0.5891187032160534
+  [LOG] Automata | SKAB | seed=999 | original | F1=0.5269900313776835
+  [LOG] Automata | SKAB | seed=999 | noisy | F1=0.5261462803755953
+  [LOG] Automata | SKAB | seed=999 | unseen | F1=0.539528932584707
+
+  [Ýstatistiksel Testler] SKAB
+    Wilcoxon LSTM vs GRU: stat=2.0000, p=0.1875
+  [LOG] Wilcoxon_LSTM_vs_GRU | SKAB | seed=all | stat_test | F1=0.0
+    Wilcoxon LSTM vs Automata: stat=2.0000, p=0.1875
+  [LOG] Wilcoxon_LSTM_vs_Automata | SKAB | seed=all | stat_test | F1=0.0
+    Wilcoxon GRU vs Automata: stat=0.0000, p=0.0625
+  [LOG] Wilcoxon_GRU_vs_Automata | SKAB | seed=all | stat_test | F1=0.0
+    Wilcoxon LSTM vs CNN1D: stat=4.0000, p=0.4375
+  [LOG] Wilcoxon_LSTM_vs_CNN1D | SKAB | seed=all | stat_test | F1=0.0
+    McNemar LSTM vs GRU: stat=374.7070, p=0.0000
+  [LOG] McNemar_LSTM_vs_GRU | SKAB | seed=999 | stat_test | F1=0.0
+    McNemar LSTM vs Automata: stat=176.4021, p=0.0000
+  [LOG] McNemar_LSTM_vs_Automata | SKAB | seed=999 | stat_test | F1=0.0
+
+  [OK] SKAB pipeline tamamlandý.
+
+=======================================================
+[Veri Seti] BATADAL iþleniyor...
+=======================================================
+  Train: 2506, Val: 835, Test: 836
+
+  --- Seed 42 ---
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] LSTM | BATADAL | seed=42 | original | F1=0.8871943957654638
+  [LOG] LSTM | BATADAL | seed=42 | noisy | F1=0.8898907145124475
+  [LOG] LSTM | BATADAL | seed=42 | unseen | F1=0.7972545330967926
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] GRU | BATADAL | seed=42 | original | F1=0.8618698019831967
+  [LOG] GRU | BATADAL | seed=42 | noisy | F1=0.8648798361685698
+  [LOG] GRU | BATADAL | seed=42 | unseen | F1=0.7755710442632531
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] CNN1D | BATADAL | seed=42 | original | F1=0.721504200148653
+  [LOG] CNN1D | BATADAL | seed=42 | noisy | F1=0.726376139975641
+  [LOG] CNN1D | BATADAL | seed=42 | unseen | F1=0.6863258672997835
+  [LOG] Automata | BATADAL | seed=42 | original | F1=0.8216697936210132
+  [LOG] Automata | BATADAL | seed=42 | noisy | F1=0.8290783789644732
+  [LOG] Automata | BATADAL | seed=42 | unseen | F1=0.8067730502192947
+
+  --- Seed 123 ---
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] LSTM | BATADAL | seed=123 | original | F1=0.9191679552707399
+  [LOG] LSTM | BATADAL | seed=123 | noisy | F1=0.921067556064843
+  [LOG] LSTM | BATADAL | seed=123 | unseen | F1=0.8075428552669887
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] GRU | BATADAL | seed=123 | original | F1=0.8361370681896466
+  [LOG] GRU | BATADAL | seed=123 | noisy | F1=0.8371226678237154
+  [LOG] GRU | BATADAL | seed=123 | unseen | F1=0.7480944554677273
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] CNN1D | BATADAL | seed=123 | original | F1=0.7244076229970484
+  [LOG] CNN1D | BATADAL | seed=123 | noisy | F1=0.726825767111307
+  [LOG] CNN1D | BATADAL | seed=123 | unseen | F1=0.6939998521976481
+  [LOG] Automata | BATADAL | seed=123 | original | F1=0.8216697936210132
+  [LOG] Automata | BATADAL | seed=123 | noisy | F1=0.8238072350282711
+  [LOG] Automata | BATADAL | seed=123 | unseen | F1=0.8192813744031645
+
+  --- Seed 2026 ---
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] LSTM | BATADAL | seed=2026 | original | F1=0.886092323249265
+  [LOG] LSTM | BATADAL | seed=2026 | noisy | F1=0.8888660546997589
+  [LOG] LSTM | BATADAL | seed=2026 | unseen | F1=0.7861110547060959
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] GRU | BATADAL | seed=2026 | original | F1=0.8666165482048478
+  [LOG] GRU | BATADAL | seed=2026 | noisy | F1=0.8674981928519796
+  [LOG] GRU | BATADAL | seed=2026 | unseen | F1=0.7760073398018716
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] CNN1D | BATADAL | seed=2026 | original | F1=0.723132352884165
+  [LOG] CNN1D | BATADAL | seed=2026 | noisy | F1=0.7239448588776128
+  [LOG] CNN1D | BATADAL | seed=2026 | unseen | F1=0.6903190876388278
+  [LOG] Automata | BATADAL | seed=2026 | original | F1=0.8216697936210132
+  [LOG] Automata | BATADAL | seed=2026 | noisy | F1=0.8315027991210054
+  [LOG] Automata | BATADAL | seed=2026 | unseen | F1=0.8170801944386851
+
+  --- Seed 7 ---
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] LSTM | BATADAL | seed=7 | original | F1=0.9297183690626313
+  [LOG] LSTM | BATADAL | seed=7 | noisy | F1=0.9268150127386833
+  [LOG] LSTM | BATADAL | seed=7 | unseen | F1=0.8273785764519641
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] GRU | BATADAL | seed=7 | original | F1=0.8585087229155026
+  [LOG] GRU | BATADAL | seed=7 | noisy | F1=0.8614581746588953
+  [LOG] GRU | BATADAL | seed=7 | unseen | F1=0.7598354360654702
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] CNN1D | BATADAL | seed=7 | original | F1=0.7356132385158156
+  [LOG] CNN1D | BATADAL | seed=7 | noisy | F1=0.7379886974053808
+  [LOG] CNN1D | BATADAL | seed=7 | unseen | F1=0.6953057888309688
+  [LOG] Automata | BATADAL | seed=7 | original | F1=0.8216697936210132
+  [LOG] Automata | BATADAL | seed=7 | noisy | F1=0.822382529941499
+  [LOG] Automata | BATADAL | seed=7 | unseen | F1=0.811657288830002
+
+  --- Seed 999 ---
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] LSTM | BATADAL | seed=999 | original | F1=0.8889113810166442
+  [LOG] LSTM | BATADAL | seed=999 | noisy | F1=0.8887571762136222
+  [LOG] LSTM | BATADAL | seed=999 | unseen | F1=0.7855947023875287
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] GRU | BATADAL | seed=999 | original | F1=0.8382790672982787
+  [LOG] GRU | BATADAL | seed=999 | noisy | F1=0.8387712895704961
+  [LOG] GRU | BATADAL | seed=999 | unseen | F1=0.741591183739944
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] CNN1D | BATADAL | seed=999 | original | F1=0.7198718350714791
+  [LOG] CNN1D | BATADAL | seed=999 | noisy | F1=0.7190540636797492
+  [LOG] CNN1D | BATADAL | seed=999 | unseen | F1=0.671454756710622
+  [LOG] Automata | BATADAL | seed=999 | original | F1=0.8216697936210132
+  [LOG] Automata | BATADAL | seed=999 | noisy | F1=0.823095005962294
+  [LOG] Automata | BATADAL | seed=999 | unseen | F1=0.8173871958421923
+
+  [Ýstatistiksel Testler] BATADAL
+    Wilcoxon LSTM vs GRU: stat=0.0000, p=0.0625
+  [LOG] Wilcoxon_LSTM_vs_GRU | BATADAL | seed=all | stat_test | F1=0.0
+    Wilcoxon LSTM vs Automata: stat=0.0000, p=0.0625
+  [LOG] Wilcoxon_LSTM_vs_Automata | BATADAL | seed=all | stat_test | F1=0.0
+    Wilcoxon GRU vs Automata: stat=0.0000, p=0.0625
+  [LOG] Wilcoxon_GRU_vs_Automata | BATADAL | seed=all | stat_test | F1=0.0
+    Wilcoxon LSTM vs CNN1D: stat=0.0000, p=0.0625
+  [LOG] Wilcoxon_LSTM_vs_CNN1D | BATADAL | seed=all | stat_test | F1=0.0
+    McNemar LSTM vs GRU: stat=35.9252, p=0.0000
+  [LOG] McNemar_LSTM_vs_GRU | BATADAL | seed=999 | stat_test | F1=0.0
+    McNemar LSTM vs Automata: stat=28.6231, p=0.0000
+  [LOG] McNemar_LSTM_vs_Automata | BATADAL | seed=999 | stat_test | F1=0.0
+
+  [OK] BATADAL pipeline tamamlandý.
+
+=======================================================
+[Çapraz Veri Seti] Cross-dataset Deðerlendirmesi
+=======================================================
+
+  SKAB->BATADAL deðerlendiriliyor...
+  [LOG] Automata | SKAB->BATADAL | seed=42 | cross_dataset | F1=0.6347511648514992
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] LSTM | SKAB->BATADAL | seed=42 | cross_dataset | F1=0.052262190934065936
+  Early stopping tetiklendi. Epoch: 8
+  [LOG] GRU | SKAB->BATADAL | seed=42 | cross_dataset | F1=0.03367130907366314
+  Early stopping tetiklendi. Epoch: 6
+  [LOG] CNN1D | SKAB->BATADAL | seed=42 | cross_dataset | F1=0.024107652741840662
+
+  BATADAL->SKAB deðerlendiriliyor...
+  [LOG] Automata | BATADAL->SKAB | seed=42 | cross_dataset | F1=0.5167603432646692
+  Early stopping tetiklendi. Epoch: 35
+  [LOG] LSTM | BATADAL->SKAB | seed=42 | cross_dataset | F1=0.17195754768056476
+  Early stopping tetiklendi. Epoch: 10
+  [LOG] GRU | BATADAL->SKAB | seed=42 | cross_dataset | F1=0.17195754768056476
+  Early stopping tetiklendi. Epoch: 7
+  [LOG] CNN1D | BATADAL->SKAB | seed=42 | cross_dataset | F1=0.17195754768056476
+
+  [OK] Çapraz veri seti deðerlendirmesi tamamlandý.
+
+[OK] Results saved: logs/results_20260601_113125.csv
+
+=======================================================
+TABLE 1 - Model Performance (mean F1 +/- std)
+=======================================================
+Model        Dataset  F1
+-------------------------------------------------------
+Automata    BATADAL 0.8217 +/- 0.0
+Automata    SKAB    0.527 +/- 0.0
+CNN1D       BATADAL 0.7249 +/- 0.0056
+CNN1D       SKAB    0.5035 +/- 0.0494
+GRU         BATADAL 0.8523 +/- 0.0126
+GRU         SKAB    0.3436 +/- 0.1302
+LSTM        BATADAL 0.9022 +/- 0.0185
+LSTM        SKAB    0.4484 +/- 0.0874
+
+=======================================================
+EÐÝTÝM VE TEST SÜRECÝ BAÞARIYLA TAMAMLANDI!
+=======================================================

@@ -3,12 +3,20 @@ paths:
   data_processed_dir: "data/processed/"
   outputs_dir: "outputs/"
   logs_dir: "logs/"
+  swat_file: "11-Mar-2026_0900_1700.csv"
+  wadi_file: "WADI_attackdataLABLE.csv"
+
+active_datasets:
+  - "SKAB"
+  - "BATADAL"
 
 datasets:
   skab_folder: "SKAB/"
   batadal_file: "BATADAL/BATADAL_Training2.csv"
   skab_label: "anomaly"
   batadal_label: "ATT_FLAG"
+  swat_label: "Normal/Attack"
+  wadi_label: "attack_label"
 
 split_ratios:
   train: 0.60
@@ -20,6 +28,10 @@ training:
   batch_size: 32
   early_stopping_patience: 5
   random_seeds: [42, 123, 2026, 7, 999]
+  prediction_thresholds:
+    SKAB: 0.15
+    BATADAL: 0.05
+    default: 0.10
 
 automata:
   window_size: 4
