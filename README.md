@@ -10,8 +10,8 @@
 
 | İsim | Öğrenci No |
 |------|------------|
-| [Yusuf Can Müştekin] | [231307082] |
-| [Gülnihal Eruslu] | [231307064] |
+| Yusuf Can Müştekin | 231307082 |
+| Gülnihal Eruslu | 231307064 |
 
 ---
 
