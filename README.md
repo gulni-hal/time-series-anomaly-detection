@@ -6,22 +6,22 @@
 
 ---
 
-## 0. Proje Ekibi
+## Proje Ekibi
 
 | İsim | Öğrenci No |
 |------|------------|
-| [İsim 1] | [No 1] |
-| [İsim 2] | [No 2] |
+| [Yusuf Can Müştekin] | [231307082] |
+| [Gülnihal Eruslu] | [231307064] |
 
 ---
 
-## 1. Proje Özeti
+## Proje Özeti
 
 Bu proje, endüstriyel kontrol sistemlerinde zaman serisi anomali tespiti için dört farklı modelleme yaklaşımını — LSTM, GRU, CNN1D ve Olasılıksal Otomata — sistematik biçimde karşılaştırmaktadır. SKAB ve BATADAL veri setleri üzerinde orijinal, gürültülü ve görülmemiş (unseen) senaryolar altında deneyler yürütülmüş; her model beş farklı rastgele tohumla (seed) değerlendirilmiştir. Sınıf dengesizliği sorunu ağırlıklı kayıp fonksiyonu ile giderilmiş, her veri setine özgü karar eşiği (threshold) kullanılmıştır. Proje; açıklanabilirlik, istatistiksel test ve parametre duyarlılık analizi modüllerini de kapsamakta olup yeniden üretilebilir (reproducible) bir pipeline sunmaktadır.
 
 ---
 
-## 2. Araştırma Sorusu
+## Araştırma Sorusu
 
 > **"Farklı modelleme yaklaşımları zaman serisi anomali tespitinde nasıl davranır?"**
 
@@ -34,7 +34,7 @@ Endüstriyel sistemlerde anomali tespiti; yüksek sınıf dengesizliği, zaman b
 
 ---
 
-## 3. Proje Mimarisi
+## Proje Mimarisi
 
 ```
 yazlab2/
@@ -88,7 +88,7 @@ yazlab2/
 
 ---
 
-## 4. Kurulum ve Çalıştırma
+## Kurulum ve Çalıştırma
 
 ### Gereksinimler
 
@@ -136,9 +136,9 @@ print('ALL IMPORTS OK')
 
 ---
 
-## 5. Veri Setleri
+## Veri Setleri
 
-### 5.1 SKAB (Skoltech Anomaly Benchmark)
+### SKAB (Skoltech Anomaly Benchmark)
 
 | Özellik | Değer |
 |---------|-------|
@@ -156,7 +156,7 @@ print('ALL IMPORTS OK')
 3. `StandardScaler` yalnızca eğitim verisi üzerinde fit edilir (veri sızıntısı önlenir).
 4. Otomata için `PCA(n_components=1)` ile tek boyuta indirgeme yapılır.
 
-### 5.2 BATADAL (Battle of the Attack Detection ALgorithms)
+### BATADAL (Battle of the Attack Detection ALgorithms)
 
 | Özellik | Değer |
 |---------|-------|
@@ -176,9 +176,9 @@ print('ALL IMPORTS OK')
 
 ---
 
-## 6. Modeller
+## Modeller
 
-### 6.1 LSTM (Long Short-Term Memory)
+### LSTM (Long Short-Term Memory)
 
 Uzun vadeli bağımlılıkları öğrenebilen tekrarlayan sinir ağı. Kapı mekanizmaları (forget, input, output gate) sayesinde gradyan sönmesi sorununu aşar.
 
@@ -187,7 +187,7 @@ Uzun vadeli bağımlılıkları öğrenebilen tekrarlayan sinir ağı. Kapı mek
 - **Kayıp:** `BCEWithLogitsLoss(pos_weight=n_neg/n_pos)`
 - **Çıktı:** Ham logit; tahmin aşamasında `sigmoid + threshold` uygulanır
 
-### 6.2 GRU (Gated Recurrent Unit)
+### GRU (Gated Recurrent Unit)
 
 LSTM'e kıyasla daha az parametreli; update ve reset kapılarıyla benzer uzun dönem hafızasını daha hızlı öğrenir.
 
@@ -196,7 +196,7 @@ LSTM'e kıyasla daha az parametreli; update ve reset kapılarıyla benzer uzun d
 - **Kayıp:** `BCEWithLogitsLoss(pos_weight=n_neg/n_pos)`
 - **Çıktı:** Ham logit
 
-### 6.3 CNN1D (1-Boyutlu Evrişimli Sinir Ağı)
+### CNN1D (1-Boyutlu Evrişimli Sinir Ağı)
 
 Yerel zamansal örüntüleri kısa pencereler üzerinde evrişim filtresiyle öğrenir. Eğitim süresi LSTM/GRU'ya kıyasla belirgin biçimde daha kısadır.
 
@@ -206,7 +206,7 @@ Yerel zamansal örüntüleri kısa pencereler üzerinde evrişim filtresiyle ö�
 - **Çıktı:** Ham logit
 - **Not:** Pencere boyutu 2'ye düşürülmüştür (hız optimizasyonu).
 
-### 6.4 Olasılıksal Otomata (Probabilistic Automata)
+### Olasılıksal Otomata (Probabilistic Automata)
 
 Veri odaklı, yorumlanabilir ve eğitim maliyeti son derece düşük bir deterministik model.
 
@@ -255,9 +255,9 @@ d_Lev(s1, s2) = min(insert, delete, substitute) operasyonları
 
 ---
 
-## 7. Deney Tasarımı
+## Deney Tasarımı
 
-### 7.1 Senaryolar
+### Senaryolar
 
 | Senaryo | Açıklama | Uygulama |
 |---------|----------|----------|
@@ -265,7 +265,7 @@ d_Lev(s1, s2) = min(insert, delete, substitute) operasyonları
 | **Noisy** | Gaussian gürültü eklendi | sigma=0.05, mu=0.0 |
 | **Unseen** | Görülmemiş durum enjeksiyonu | Test sinyaline sapma eklenir; Otomata yeni durumlarla karşılaşır |
 
-### 7.2 Deneysel Protokol
+### Deneysel Protokol
 
 | Parametre | Değer |
 |-----------|-------|
@@ -281,7 +281,7 @@ d_Lev(s1, s2) = min(insert, delete, substitute) operasyonları
 
 ---
 
-## 8. Sonuçlar — Tablo 1: Model Performansı (Original Senaryo)
+## Sonuçlar — Tablo 1: Model Performansı (Original Senaryo)
 
 Tüm değerler 5 seed üzerinden ortalama ± standart sapma olarak verilmiştir.
 
@@ -300,7 +300,7 @@ Tüm değerler 5 seed üzerinden ortalama ± standart sapma olarak verilmiştir.
 
 ---
 
-## 9. Sonuçlar — Tablo 2: Gürültü ve Unseen Robustness
+## Sonuçlar — Tablo 2: Gürültü ve Unseen Robustness
 
 | Model | Dataset | Original F1 | Noisy F1 | Unseen F1 | Noisy Delta | Unseen Delta |
 |-------|---------|-------------|----------|-----------|-------------|--------------|
@@ -321,7 +321,7 @@ Tüm değerler 5 seed üzerinden ortalama ± standart sapma olarak verilmiştir.
 
 ---
 
-## 10. Sonuçlar — Tablo 3: Cross-Dataset Genellenebilirlik (seed=42)
+## Sonuçlar — Tablo 3: Cross-Dataset Genellenebilirlik (seed=42)
 
 | Eğitim -> Test | Model | F1 |
 |----------------|-------|----|
@@ -344,7 +344,7 @@ Otomata, sembolik SAX kodlaması sayesinde soyut örüntüleri temsil ettiğinde
 
 ---
 
-## 11. Parametre Duyarlılık Analizi
+## Parametre Duyarlılık Analizi
 
 Otomata'nın `window_size` ve `alphabet_size` parametreleri [3,4,5,6] aralığında ızgara taramasıyla değerlendirilmiştir.
 
@@ -374,7 +374,7 @@ En iyi: window=5, alphabet=5 — F1 = 0.169
 
 ---
 
-## 12. Olasılıksal Açıklanabilirlik Modülü
+## Olasılıksal Açıklanabilirlik Modülü
 
 `src/explainability/explainer.py` modülü, otomatanın her kararı için yorumlanabilir bir JSON çıktısı üretir. Görülmemiş durumlar `UnseenHandler` tarafından Levenshtein mesafesiyle en yakın bilinen duruma eşlenir.
 
@@ -417,7 +417,7 @@ Düşük dizi olasılığı, gözlemlenen geçişlerin eğitim dağılımından 
 
 ---
 
-## 13. İstatistiksel Testler
+## İstatistiksel Testler
 
 ### Wilcoxon İşaret-Sıralama Testi
 
@@ -454,7 +454,7 @@ Test seti üzerinde örnek düzeyinde sınıflandırma farklılıklarını değe
 
 ---
 
-## 14. Görseller
+## Görseller
 
 Tüm grafikler 150 DPI, beyaz arka plan ve lacivert-mavi palet ile üretilmiştir.
 
@@ -492,7 +492,7 @@ Tüm grafikler 150 DPI, beyaz arka plan ve lacivert-mavi palet ile üretilmişti
 
 ---
 
-## 15. Bulgular ve Tartışma
+## Bulgular ve Tartışma
 
 ### BATADAL: Derin Öğrenme Üstünlüğü
 
