@@ -1,22 +1,36 @@
 # Zaman Serisi Anomali Tespiti: Derin Öğrenme ve Olasılıksal Otomata Karşılaştırması
 
 
-## Proje Ekibi
 
-| İsim | Öğrenci No |
-|------|------------|
-| Yusuf Can Müştekin | 231307082 |
-| Gülnihal Eruslu | 231307064 |
+##  1. Proje Bilgileri
+
+**Proje Adı:** Zaman Serisi Anomali Tespiti  
+
+**Ders:** Yazılım Geliştirme Laboratuvarı-II
+
+**Bölüm:** Bilişim Sistemleri Mühendisliği
+
+**Tarih:** 06.06.2026
+
+
+
+Grup Üyeleri:
+
+
+* 231307082 Yusuf Can Müştekin (GitHub: @mustkein)
+
+
+* 231307064 Gülnihal Eruslu (GitHub: @gulni-hal)
 
 ---
 
-## Proje Özeti
+## 2. Proje Özeti
 
-Bu proje, endüstriyel kontrol sistemlerinde zaman serisi anomali tespiti için dört farklı modelleme yaklaşımını — LSTM, GRU, CNN1D ve Olasılıksal Otomata — sistematik biçimde karşılaştırmaktadır. SKAB ve BATADAL veri setleri üzerinde orijinal, gürültülü ve görülmemiş (unseen) senaryolar altında deneyler yürütülmüş; her model beş farklı rastgele tohumla (seed) değerlendirilmiştir. Sınıf dengesizliği sorunu ağırlıklı kayıp fonksiyonu ile giderilmiş, her veri setine özgü karar eşiği (threshold) kullanılmıştır. Proje; açıklanabilirlik, istatistiksel test ve parametre duyarlılık analizi modüllerini de kapsamakta olup yeniden üretilebilir (reproducible) bir pipeline sunmaktadır.
+Bu proje, endüstriyel kontrol sistemlerinde zaman serisi anomali tespiti için dört farklı modelleme yaklaşımını — LSTM, GRU, CNN1D ve Olasılıksal Otomata — sistematik biçimde karşılaştırmaktadır. SKAB ve BATADAL veri setleri üzerinde orijinal, gürültülü ve görülmemiş (unseen) senaryolar altında deneyler yürütülmüş; her model beş farklı rastgele tohumla (seed) değerlendirilmiştir. Sınıf dengesizliği sorunu ağırlıklı kayıp fonksiyonu ile giderilmiş her veri setine özgü karar eşiği (threshold) kullanılmıştır. Proje; açıklanabilirlik, istatistiksel test ve parametre duyarlılık analizi modüllerini de kapsamakta olup yeniden üretilebilir (reproducible) bir pipeline sunmaktadır.
 
 ---
 
-## Araştırma Sorusu
+## 3. Araştırma Sorusu
 
 > **"Farklı modelleme yaklaşımları zaman serisi anomali tespitinde nasıl davranır?"**
 
@@ -29,7 +43,7 @@ Endüstriyel sistemlerde anomali tespiti; yüksek sınıf dengesizliği, zaman b
 
 ---
 
-## Proje Mimarisi
+## 4. Proje Mimarisi
 
 ```
 time-series-anomaly-detection
@@ -83,40 +97,40 @@ time-series-anomaly-detection
 
 ---
 
-## Kurulum ve Çalıştırma
+## 5. Kurulum ve Çalıştırma
 
-### Gereksinimler
+### 5.1. Gereksinimler
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Tam Pipeline
+### 5.2. Tam Pipeline
 
 ```bash
 python main.py
 ```
 
-### Yayın Grafikleri
+### 5.3. Yayın Grafikleri
 
 ```bash
 python generate_plots.py
 ```
 
-### Parametre Duyarlılık Analizi
+### 5.4. Parametre Duyarlılık Analizi
 
 ```bash
 python gen_param_sensitivity.py
 ```
 
-### Birim Testler
+### 5.5. Birim Testler
 
 ```bash
 python tests/test_unseen.py      # 11/11 test
 python tests/test_levenshtein.py # 9/9 test
 ```
 
-### Hızlı Import Kontrolü
+### 5.6. Hızlı Import Kontrolü
 
 ```bash
 python -c "
@@ -131,9 +145,9 @@ print('ALL IMPORTS OK')
 
 ---
 
-## Veri Setleri
+## 6. Veri Setleri
 
-### SKAB (Skoltech Anomaly Benchmark)
+### 6.1. SKAB (Skoltech Anomaly Benchmark)
 
 | Özellik | Değer |
 |---------|-------|
@@ -151,7 +165,7 @@ print('ALL IMPORTS OK')
 3. `StandardScaler` yalnızca eğitim verisi üzerinde fit edilir (veri sızıntısı önlenir).
 4. Otomata için `PCA(n_components=1)` ile tek boyuta indirgeme yapılır.
 
-### BATADAL (Battle of the Attack Detection ALgorithms)
+### 6.2. BATADAL (Battle of the Attack Detection ALgorithms)
 
 | Özellik | Değer |
 |---------|-------|
@@ -171,9 +185,9 @@ print('ALL IMPORTS OK')
 
 ---
 
-## Modeller
+## 7. Modeller
 
-### LSTM (Long Short-Term Memory)
+### 7.1. LSTM (Long Short-Term Memory)
 
 Uzun vadeli bağımlılıkları öğrenebilen tekrarlayan sinir ağı. Kapı mekanizmaları (forget, input, output gate) sayesinde gradyan sönmesi sorununu aşar.
 
@@ -182,7 +196,7 @@ Uzun vadeli bağımlılıkları öğrenebilen tekrarlayan sinir ağı. Kapı mek
 - **Kayıp:** `BCEWithLogitsLoss(pos_weight=n_neg/n_pos)`
 - **Çıktı:** Ham logit; tahmin aşamasında `sigmoid + threshold` uygulanır
 
-### GRU (Gated Recurrent Unit)
+### 7.2. GRU (Gated Recurrent Unit)
 
 LSTM'e kıyasla daha az parametreli; update ve reset kapılarıyla benzer uzun dönem hafızasını daha hızlı öğrenir.
 
@@ -191,7 +205,7 @@ LSTM'e kıyasla daha az parametreli; update ve reset kapılarıyla benzer uzun d
 - **Kayıp:** `BCEWithLogitsLoss(pos_weight=n_neg/n_pos)`
 - **Çıktı:** Ham logit
 
-### CNN1D (1-Boyutlu Evrişimli Sinir Ağı)
+### 7.3. CNN1D (1-Boyutlu Evrişimli Sinir Ağı)
 
 Yerel zamansal örüntüleri kısa pencereler üzerinde evrişim filtresiyle öğrenir. Eğitim süresi LSTM/GRU'ya kıyasla belirgin biçimde daha kısadır.
 
@@ -201,11 +215,11 @@ Yerel zamansal örüntüleri kısa pencereler üzerinde evrişim filtresiyle ö�
 - **Çıktı:** Ham logit
 - **Not:** Pencere boyutu 2'ye düşürülmüştür (hız optimizasyonu).
 
-### Olasılıksal Otomata (Probabilistic Automata)
+### 7.4. Olasılıksal Otomata (Probabilistic Automata)
 
 Veri odaklı, yorumlanabilir ve eğitim maliyeti son derece düşük bir deterministik model.
 
-#### Algoritma Akışı
+#### 7.4.1. Algoritma Akışı
 
 ```
 Ham Zaman Serisi
@@ -232,7 +246,7 @@ Ham Zaman Serisi
   Anomali Kararı        <- P(Si -> Si+1) < threshold => Anomali
 ```
 
-#### Geçiş Olasılığı Formülü (Laplace Düzleme)
+#### 7.4.2. Geçiş Olasılığı Formülü (Laplace Düzleme)
 
 ```
 P(Si -> Sj) = (count(Si -> Sj) + 1) / (count(Si) + |V|)
@@ -240,7 +254,7 @@ P(Si -> Sj) = (count(Si -> Sj) + 1) / (count(Si) + |V|)
 
 burada `|V|` sözlük (vocabulary) büyüklüğüdür.
 
-#### Görülmemiş Durum Yönetimi (Levenshtein Eşleme)
+#### 7.4.3. Görülmemiş Durum Yönetimi (Levenshtein Eşleme)
 
 Test sırasında sözlükte bulunmayan bir durum ile karşılaşıldığında Levenshtein mesafesiyle en yakın bilinen duruma eşleme yapılır:
 
@@ -250,9 +264,9 @@ d_Lev(s1, s2) = min(insert, delete, substitute) operasyonları
 
 ---
 
-## Deney Tasarımı
+## 8. Deney Tasarımı
 
-### Senaryolar
+### 8.1. Senaryolar
 
 | Senaryo | Açıklama | Uygulama |
 |---------|----------|----------|
@@ -260,7 +274,7 @@ d_Lev(s1, s2) = min(insert, delete, substitute) operasyonları
 | **Noisy** | Gaussian gürültü eklendi | sigma=0.05, mu=0.0 |
 | **Unseen** | Görülmemiş durum enjeksiyonu | Test sinyaline sapma eklenir; Otomata yeni durumlarla karşılaşır |
 
-### Deneysel Protokol
+### 8.2. Deneysel Protokol
 
 | Parametre | Değer |
 |-----------|-------|
@@ -275,8 +289,9 @@ d_Lev(s1, s2) = min(insert, delete, substitute) operasyonları
 | BATADAL karar eşiği | 0.05 |
 
 ---
+## 9. Sonuçlar
 
-## Sonuçlar — Tablo 1: Model Performansı (Original Senaryo)
+### 9.1. Tablo 1: Model Performansı (Original Senaryo)
 
 Tüm değerler 5 seed üzerinden ortalama ± standart sapma olarak verilmiştir.
 
@@ -295,7 +310,7 @@ Tüm değerler 5 seed üzerinden ortalama ± standart sapma olarak verilmiştir.
 
 ---
 
-## Sonuçlar — Tablo 2: Gürültü ve Unseen Robustness
+### 9.2.  Sonuçlar — Tablo 2: Gürültü ve Unseen Robustness
 
 | Model | Dataset | Original F1 | Noisy F1 | Unseen F1 | Noisy Delta | Unseen Delta |
 |-------|---------|-------------|----------|-----------|-------------|--------------|
@@ -316,7 +331,7 @@ Tüm değerler 5 seed üzerinden ortalama ± standart sapma olarak verilmiştir.
 
 ---
 
-## Sonuçlar — Tablo 3: Cross-Dataset Genellenebilirlik (seed=42)
+### 9.3.  Sonuçlar — Tablo 3: Cross-Dataset Genellenebilirlik (seed=42)
 
 | Eğitim -> Test | Model | F1 |
 |----------------|-------|----|
@@ -339,11 +354,11 @@ Otomata, sembolik SAX kodlaması sayesinde soyut örüntüleri temsil ettiğinde
 
 ---
 
-## Parametre Duyarlılık Analizi
+## 10. Parametre Duyarlılık Analizi
 
 Otomata'nın `window_size` ve `alphabet_size` parametreleri [3,4,5,6] aralığında ızgara taramasıyla değerlendirilmiştir.
 
-### SKAB — F1 Izgarası (threshold=0.15)
+### 10.1. SKAB — F1 Izgarası (threshold=0.15)
 
 | alphabet \ window | 3 | 4 | 5 | 6 |
 |---|---|---|---|---|
@@ -354,7 +369,7 @@ Otomata'nın `window_size` ve `alphabet_size` parametreleri [3,4,5,6] aralığı
 
 En iyi: window=6, alphabet=6 — F1 = 0.333
 
-### BATADAL — F1 Izgarası (threshold=0.05)
+### 10.2. BATADAL — F1 Izgarası (threshold=0.05)
 
 | alphabet \ window | 3 | 4 | 5 | 6 |
 |---|---|---|---|---|
@@ -369,11 +384,11 @@ En iyi: window=5, alphabet=5 — F1 = 0.169
 
 ---
 
-## Olasılıksal Açıklanabilirlik Modülü
+## 11. Olasılıksal Açıklanabilirlik Modülü
 
 `src/explainability/explainer.py` modülü, otomatanın her kararı için yorumlanabilir bir JSON çıktısı üretir. Görülmemiş durumlar `UnseenHandler` tarafından Levenshtein mesafesiyle en yakın bilinen duruma eşlenir.
 
-### Örnek Açıklama Çıktısı
+### 11.1. Örnek Açıklama Çıktısı
 
 ```json
 {
@@ -400,7 +415,7 @@ En iyi: window=5, alphabet=5 — F1 = 0.169
 | `decision` | `anomaly` (olasılık < eşik) veya `normal` |
 | `confidence` | Olasılık x 100 (yüzde) |
 
-### Dizi Olasılığı Formülü
+### 11.2. Dizi Olasılığı Formülü
 
 Bir durum dizisinin toplam olasılığı:
 
@@ -412,9 +427,9 @@ Düşük dizi olasılığı, gözlemlenen geçişlerin eğitim dağılımından 
 
 ---
 
-## İstatistiksel Testler
+## 12. İstatistiksel Testler
 
-### Wilcoxon İşaret-Sıralama Testi
+### 12.1. Wilcoxon İşaret-Sıralama Testi
 
 5 seed'deki F1 skorları arasındaki medyan farkını parametrik olmayan biçimde test eder.
 
@@ -431,7 +446,7 @@ Düşük dizi olasılığı, gözlemlenen geçişlerin eğitim dağılımından 
 
 > Not: 5 seed ile Wilcoxon testi düşük istatistiksel güce sahiptir; p=0.0625 değerleri güçlü bir performans eğilimine işaret eder ancak klasik alpha=0.05 eşiğini geçememektedir.
 
-### McNemar Testi
+### 12.2. McNemar Testi
 
 Test seti üzerinde örnek düzeyinde sınıflandırma farklılıklarını değerlendirir.
 
@@ -449,37 +464,37 @@ Test seti üzerinde örnek düzeyinde sınıflandırma farklılıklarını değe
 
 ---
 
-## Görseller
+## 13. Görseller
 
 Tüm grafikler 150 DPI, beyaz arka plan ve lacivert-mavi palet ile üretilmiştir.
 
-### F1 Karşılaştırma (Grouped Bar Chart)
+### 13.1. F1 Karşılaştırma (Grouped Bar Chart)
 
 | SKAB | BATADAL |
 |------|---------|
 | ![F1 SKAB](outputs/f1_comparison_SKAB.png) | ![F1 BATADAL](outputs/f1_comparison_BATADAL.png) |
 
-### Gürültü Robustness (Line Chart)
+### 13.2. Gürültü Robustness (Line Chart)
 
 | SKAB | BATADAL |
 |------|---------|
 | ![Robustness SKAB](outputs/noise_robustness_SKAB.png) | ![Robustness BATADAL](outputs/noise_robustness_BATADAL.png) |
 
-### Confusion Matrix — LSTM (seed=42)
+### 13.3. Confusion Matrix — LSTM (seed=42)
 
 | SKAB | BATADAL |
 |------|---------|
 | ![CM SKAB](outputs/cm_LSTM_SKAB.png) | ![CM BATADAL](outputs/cm_LSTM_BATADAL.png) |
 
-### Otomata Durum Diyagramı — SKAB
+### 13.4. Otomata Durum Diyagramı — SKAB
 
 ![State Diagram SKAB](outputs/state_diagram_SKAB.png)
 
-### Otomata Geçiş Isı Haritası — SKAB
+### 13.5. Otomata Geçiş Isı Haritası — SKAB
 
 ![Transition Heatmap SKAB](outputs/transition_heatmap_SKAB.png)
 
-### Parametre Duyarlılık Analizi
+### 13.6. Parametre Duyarlılık Analizi
 
 | SKAB | BATADAL |
 |------|---------|
@@ -487,9 +502,9 @@ Tüm grafikler 150 DPI, beyaz arka plan ve lacivert-mavi palet ile üretilmişti
 
 ---
 
-## Bulgular ve Tartışma
+## 14. Bulgular ve Tartışma
 
-### BATADAL: Derin Öğrenme Üstünlüğü
+### 14.1. BATADAL: Derin Öğrenme Üstünlüğü
 
 BATADAL'da LSTM F1 = 0.9022 ile en yüksek performansı elde etmiştir:
 
@@ -497,11 +512,11 @@ BATADAL'da LSTM F1 = 0.9022 ile en yüksek performansı elde etmiştir:
 - Sınıf dengesizliği (`pos_weight ≈ 9.4`) BCEWithLogitsLoss ile giderilmiştir. Bu düzeltme öncesinde tüm DL modeller çoğunluk sınıfına çöküyordu (tüm tahminler Normal, Anomali Recall = 0).
 - Veri setine özgü eşik (`threshold = 0.05`) hassasiyeti artırmıştır.
 
-### SKAB: CNN1D Liderliği
+### 14.2. SKAB: CNN1D Liderliği
 
 SKAB'da CNN1D beklenmedik biçimde en iyi sonucu vermiştir (F1 = 0.7795). SKAB'ın kısa süreli, anlık anomalileri CNN1D'nin yerel örüntü öğrenme kapasitesine daha iyi uymaktadır. LSTM ve GRU yüksek seed varyansı (std > 0.06) sergileyerek bu veri setinde kararsız davranmıştır.
 
-### Otomata: Stabilite ve Yorumlanabilirlik
+### 14.3. Otomata: Stabilite ve Yorumlanabilirlik
 
 Otomata deterministik yapısı nedeniyle tüm seedlerde aynı sonucu üretir (std = 0.000). SKAB'da F1 = 0.525 ile DL'nin gerisinde kalsa da kritik avantajları vardır:
 
@@ -513,7 +528,7 @@ Otomata deterministik yapısı nedeniyle tüm seedlerde aynı sonucu üretir (st
 | Unseen dayanıklılığı | En stabil | BATADAL'da -10% |
 | Seed varyansı | 0.000 | 0.006–0.095 |
 
-### Temel Mühendislik Kararları
+### 14.4. Temel Mühendislik Kararları
 
 | Sorun | Çözüm | Etki |
 |-------|-------|------|
@@ -525,7 +540,7 @@ Otomata deterministik yapısı nedeniyle tüm seedlerde aynı sonucu üretir (st
 
 ---
 
-## 16. Kaynaklar
+## 15. Kaynaklar
 
 1. **SKAB Veri Seti:** Ilyasov, A. et al. "SKAB: Skoltech Anomaly Benchmark." GitHub, 2020.
 
