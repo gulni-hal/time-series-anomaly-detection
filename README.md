@@ -1,10 +1,5 @@
 # Zaman Serisi Anomali Tespiti: Derin Öğrenme ve Olasılıksal Otomata Karşılaştırması
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Tests](https://img.shields.io/badge/Tests-20%2F20%20passing-brightgreen)
-
----
 
 ## Proje Ekibi
 
@@ -37,7 +32,7 @@ Endüstriyel sistemlerde anomali tespiti; yüksek sınıf dengesizliği, zaman b
 ## Proje Mimarisi
 
 ```
-yazlab2/
+time-series-anomaly-detection
 │
 ├── main.py                        # Uçtan uca çalıştırma pipeline'i
 ├── generate_plots.py              # Yayın kalitesinde görsel üretimi (8 grafik)
@@ -548,6 +543,3 @@ Otomata deterministik yapısı nedeniyle tüm seedlerde aynı sonucu üretir (st
 
 8. **Wilcoxon Testi:** Wilcoxon, F. "Individual comparisons by ranking methods." *Biometrics Bulletin*, 1945.
 
----
-
-*Bu proje Yıldız Teknik Üniversitesi Yazılım Laboratuvarı II dersi kapsamında geliştirilmiştir.*
